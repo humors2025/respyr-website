@@ -1,0 +1,52 @@
+const html = String.raw`<section class="section showcase">
+  <div class="app-hero">
+    <div class="section-eyb reveal">The Respyr app</div>
+    <h2 class="app-hero-title reveal">All in <span>one app.</span></h2>
+
+    <div class="app-hero-phone reveal">
+      <div class="phone">
+        <div class="phone-screen phone-screen--image">
+          <img src="/images/embedded-09-87ac216d5711f053.jpg" alt="Respyr app — Score Card showing 88% Body is primed to burn fat steadily" decoding="async">
+        </div>
+      </div>
+    </div>
+
+    <!-- Glass floating tab bar — Respyr-relevant tabs (Breath active) -->
+    <div class="app-tabbar reveal" role="tablist" aria-label="App sections">
+      <button class="app-tab is-active" type="button" role="tab" aria-selected="true">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h10a2 2 0 1 0-2-2"/><path d="M3 12h14a2 2 0 1 1-2 2"/><path d="M3 16h7a2 2 0 1 1-2 2"/></svg>
+        <span>Breath</span>
+      </button>
+      <button class="app-tab" type="button" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span>Metabolism</span>
+      </button>
+      <button class="app-tab" type="button" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.52-4.48 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>
+        <span>Nutrition</span>
+      </button>
+      <button class="app-tab" type="button" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>
+        <span>Trends</span>
+      </button>
+    </div>
+
+    <p class="app-hero-caption reveal">Take your breath, and Respyr turns it into clear answers across metabolism, nutrition, and recovery — one plain-language verdict for today, plus the trends underneath. No charts to decode.</p>
+
+    <div class="app-store-row reveal">
+      <a href="#" class="app-store-badge">
+        <svg viewBox="0 0 24 24"><path d="M17.5 12.5c-.05-3.05 2.5-4.5 2.6-4.6-1.4-2.05-3.6-2.35-4.4-2.4-1.85-.2-3.65 1.1-4.6 1.1-.95 0-2.4-1.1-4-1.05-2 .05-3.9 1.2-4.95 3-2.1 3.65-.55 9.05 1.5 12 1 1.4 2.2 3 3.8 2.95 1.55-.05 2.1-1 3.95-1 1.8 0 2.35 1 3.95.95 1.65-.05 2.7-1.45 3.7-2.85 1.15-1.65 1.65-3.25 1.7-3.35-.05 0-3.3-1.3-3.35-5z"/></svg>
+        <div><div class="l">Download on the</div><div class="n">App Store</div></div>
+      </a>
+      <a href="#" class="app-store-badge">
+        <svg viewBox="0 0 24 24"><path d="M3 20.5V3.5c0-.6.3-1.1.8-1.4l13 8.5c.5.3.5 1.1 0 1.4l-13 8.5c-.5.3-.8-.1-.8-.5z"/></svg>
+        <div><div class="l">Get it on</div><div class="n">Google Play</div></div>
+      </a>
+    </div>
+    <div class="app-store-note">*Available for iOS and Android · free forever</div>
+  </div>
+</section>`;
+
+export default function AppShowcaseSection() {
+  return <div dangerouslySetInnerHTML={{ __html: html }} />;
+}
