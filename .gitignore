@@ -11,3 +11,6 @@ respyr-final (1).html
 # Local tooling / dependencies
 .claude/
 node_modules/
+
+# Dev artifacts
+mobile-qr.png
