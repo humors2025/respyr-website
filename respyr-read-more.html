@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Respyr device · A closer look</title>
+<meta name="description" content="Three breaths. Three signals. One full picture of how today is going.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rs-white:#fff; --rs-dark:#252525;
+  --rs-blue:#308bf9; --rs-blue-light:#e9f3ff;
+  --rs-text-primary:#252525; --rs-text-secondary:#535359; --rs-text-muted:#738298;
+  --rs-border:#e1e6ed;
+  --rs-font:'Poppins',system-ui,-apple-system,sans-serif;
+  --rs-r-card:15px; --rs-r-pill:33px;
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important}
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--rs-font);background:var(--rs-white);color:var(--rs-text-primary);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.9s cubic-bezier(.2,.6,.2,1),transform 0.9s cubic-bezier(.2,.6,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ── Top bar ─────────────────────────────────── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,255,255,0.78);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(225,230,237,0.5);height:64px;display:flex;align-items:center;padding:0 24px}
+.topbar-inner{max-width:1320px;width:100%;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.brand{display:inline-flex;align-items:center}
+.brand-logo{height:28px;width:auto}
+.back-link{font-size:13px;font-weight:500;letter-spacing:-0.26px;color:var(--rs-text-secondary);display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--rs-r-pill);border:1px solid var(--rs-border);background:var(--rs-white);transition:background 0.18s ease,color 0.18s ease}
+.back-link:hover{background:var(--rs-blue-light);color:var(--rs-blue);border-color:var(--rs-blue-light)}
+.back-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Shared ─────────────────────────────────── */
+.eyb{display:inline-flex;align-items:center;gap:8px;background:var(--rs-white);color:var(--rs-text-primary);font-size:12px;font-weight:500;letter-spacing:-0.24px;padding:8px 16px;border-radius:var(--rs-r-pill);border:1px solid var(--rs-border);box-shadow:0 1px 2px rgba(37,37,37,0.04)}
+.eyb::before{content:'';width:7px;height:7px;background:var(--rs-blue);border-radius:50%;animation:pulse-dot 2.4s ease-in-out infinite;box-shadow:0 0 10px var(--rs-blue)}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:0.45}}
+
+.btn-primary{background:var(--rs-dark);color:var(--rs-white);padding:0 24px 0 28px;height:54px;border-radius:var(--rs-r-pill);font-size:14px;font-weight:500;border:none;letter-spacing:-0.28px;display:inline-flex;align-items:center;gap:14px;cursor:pointer;box-shadow:0 12px 30px rgba(37,37,37,0.30);transition:transform 0.2s ease,box-shadow 0.2s ease,background 0.2s ease}
+.btn-primary:hover{background:#3a3a3a;transform:translateY(-2px);box-shadow:0 18px 36px rgba(37,37,37,0.40);color:var(--rs-white)}
+.btn-primary .arrow{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--rs-blue);border-radius:50%}
+.btn-primary .arrow svg{stroke:#fff;width:14px;height:14px;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── 1. HERO ─────────────────────────────────── */
+.hero{padding:200px 24px 120px;text-align:center;background:linear-gradient(180deg,#fafbfd 0%,#fff 60%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:55%;left:50%;transform:translate(-50%,-30%);width:min(900px,90%);height:700px;background:radial-gradient(ellipse at center,rgba(48,139,249,0.13),transparent 65%);pointer-events:none;z-index:0}
+.hero > *{position:relative;z-index:1}
+.hero .eyb{margin-bottom:32px}
+.hero h1{font-weight:600;font-size:clamp(48px,8vw,116px);line-height:0.96;letter-spacing:-4px;color:var(--rs-text-primary);margin:0 0 24px;max-width:1100px;margin-left:auto;margin-right:auto}
+.hero h1 em{font-style:normal;color:var(--rs-blue);font-weight:600}
+.hero-sub{font-size:17px;line-height:1.55;color:var(--rs-text-secondary);font-weight:400;letter-spacing:-0.34px;max-width:540px;margin:0 auto}
+.hero-device{margin:88px auto 0;max-width:420px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative}
+.hero-device::before{content:'';position:absolute;inset:auto 0 -8% 0;height:64px;background:radial-gradient(ellipse at center,rgba(48,139,249,0.32),transparent 65%);filter:blur(20px);z-index:0;animation:halo 6s ease-in-out infinite}
+.hero-device img{max-width:100%;height:auto;animation:float 6s ease-in-out infinite;position:relative;z-index:1;filter:drop-shadow(0 30px 40px rgba(0,0,0,0.25))}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes halo{0%,100%{opacity:0.8;transform:scaleX(1)}50%{opacity:1;transform:scaleX(1.08)}}
+
+/* ── 2. STAT STRIP ───────────────────────────── */
+.stats{padding:24px;background:var(--rs-white);border-top:1px solid var(--rs-border);border-bottom:1px solid var(--rs-border)}
+.stats-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:48px}
+.stat{text-align:center;display:flex;flex-direction:column;gap:4px;padding:24px 0}
+.stat-n{font-weight:600;font-size:clamp(28px,3vw,42px);letter-spacing:-1.6px;color:var(--rs-text-primary);line-height:1}
+.stat-l{font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--rs-text-muted);font-weight:500;margin-top:6px}
+.stat + .stat{border-left:1px solid var(--rs-border)}
+
+/* ── 3. SENSORS — typography as art ─────────── */
+.sensors{padding:160px 24px 80px;background:var(--rs-white);text-align:center}
+.sensors-head{margin:0 auto 0;max-width:760px}
+.sensors-head .eyb{margin-bottom:28px}
+.sensors-head h2{font-weight:600;font-size:clamp(36px,5.2vw,76px);line-height:1.0;letter-spacing:-3px;color:var(--rs-text-primary);margin:0 0 24px}
+.sensors-head h2 em{font-style:normal;color:var(--rs-blue);font-weight:600}
+.sensors-head .sub{font-size:17px;line-height:1.55;color:var(--rs-text-secondary);font-weight:400;letter-spacing:-0.34px;max-width:560px;margin:0 auto}
+
+.sensor-moments{max-width:1320px;margin:96px auto 0}
+.moment{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding:96px 24px;text-align:left;position:relative}
+.moment + .moment{border-top:1px solid var(--rs-border)}
+.moment-formula{font-weight:700;font-size:clamp(80px,14vw,220px);line-height:0.85;letter-spacing:-8px;color:var(--rs-blue);font-feature-settings:"ss01";white-space:nowrap}
+.moment-formula sub{font-size:0.55em;vertical-align:baseline;line-height:0;letter-spacing:-2px;font-weight:600}
+.moment-text{display:flex;flex-direction:column;gap:18px;max-width:440px}
+.moment-tag{font-size:13px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--rs-text-muted)}
+.moment h3{font-weight:600;font-size:clamp(36px,4.4vw,64px);line-height:1.02;letter-spacing:-2.4px;color:var(--rs-text-primary);margin:0}
+.moment-p{font-size:17px;line-height:1.55;color:var(--rs-text-secondary);font-weight:400;letter-spacing:-0.34px}
+.moment-meta{font-size:12px;letter-spacing:0.08em;color:var(--rs-text-muted);text-transform:uppercase;font-weight:500;margin-top:8px}
+.moment.alt{grid-template-columns:1fr 1fr}
+.moment.alt .moment-text{order:1;justify-self:end;text-align:right}
+.moment.alt .moment-formula{order:2;justify-self:start}
+
+/* ── 4. RITUAL — animated clock ─────────────── */
+.ritual{padding:160px 24px;background:linear-gradient(180deg,#fff 0%,#fafbfd 100%);text-align:center;position:relative;overflow:hidden}
+.ritual::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(700px,80%);height:500px;background:radial-gradient(ellipse at center,rgba(48,139,249,0.10),transparent 70%);pointer-events:none}
+.ritual > *{position:relative;z-index:1}
+.ritual .eyb{margin-bottom:32px}
+.ritual h2{font-weight:600;font-size:clamp(36px,5vw,72px);line-height:1.02;letter-spacing:-3px;color:var(--rs-text-primary);margin:0 auto 24px;max-width:780px}
+.ritual h2 em{font-style:normal;color:var(--rs-blue);font-weight:600}
+.ritual-sub{font-size:17px;line-height:1.55;color:var(--rs-text-secondary);letter-spacing:-0.34px;max-width:560px;margin:0 auto 96px}
+
+.clock{font-weight:700;font-size:clamp(140px,28vw,320px);line-height:0.85;letter-spacing:-14px;color:var(--rs-text-primary);margin-bottom:28px;display:inline-flex;align-items:baseline;gap:0}
+.clock-num{display:inline-block;min-width:1.1em;text-align:center}
+.clock-unit{font-size:0.22em;color:var(--rs-text-muted);font-weight:500;letter-spacing:-2px;margin-left:14px;line-height:1;align-self:center;transform:translateY(-0.5em)}
+.ritual-tagline{font-size:16px;letter-spacing:-0.32px;color:var(--rs-text-muted);max-width:520px;margin:0 auto;line-height:1.6}
+.ritual-tagline strong{color:var(--rs-text-primary);font-weight:600}
+
+/* ── 5. CLOSING CTA — atmospheric dark ─────── */
+.final{padding:180px 24px 160px;background:radial-gradient(ellipse at top,#0e1a2c 0%,#0a0a0b 65%);color:#fff;text-align:center;position:relative;overflow:hidden}
+.final::before{content:'';position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:min(1100px,100%);height:600px;background:radial-gradient(ellipse at center,rgba(48,139,249,0.22),transparent 60%);pointer-events:none}
+.final > *{position:relative;z-index:1}
+.final .eyb{background:rgba(255,255,255,0.10);border-color:rgba(255,255,255,0.22);color:#fff;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);margin-bottom:32px}
+.final h2{font-weight:600;font-size:clamp(36px,5.2vw,76px);line-height:1.0;letter-spacing:-3px;color:#fff;margin:0 auto 28px;max-width:880px}
+.final h2 em{font-style:normal;color:var(--rs-blue);font-weight:600}
+.final p{font-size:17px;line-height:1.6;color:rgba(255,255,255,0.72);font-weight:400;letter-spacing:-0.34px;max-width:540px;margin:0 auto 48px}
+.final .btn-primary{background:var(--rs-white);color:var(--rs-text-primary);box-shadow:0 18px 40px rgba(0,0,0,0.45)}
+.final .btn-primary:hover{background:#fff;color:var(--rs-text-primary);transform:translateY(-2px);box-shadow:0 24px 50px rgba(0,0,0,0.55)}
+.final-note{margin-top:28px;font-size:12px;letter-spacing:-0.24px;color:rgba(255,255,255,0.5)}
+
+/* ── Responsive ─────────────────────────────── */
+@media(max-width:900px){
+  .hero{padding:140px 20px 80px}
+  .hero h1{letter-spacing:-2px}
+  .hero-device{max-width:280px;margin-top:64px}
+  .stats-inner{grid-template-columns:1fr 1fr;gap:0}
+  .stat + .stat{border-left:none}
+  .stat:nth-child(2){border-left:1px solid var(--rs-border)}
+  .stat:nth-child(3),.stat:nth-child(4){border-top:1px solid var(--rs-border)}
+  .stat:nth-child(4){border-left:1px solid var(--rs-border)}
+  .sensors{padding:96px 20px 56px}
+  .moment{grid-template-columns:1fr;gap:24px;padding:64px 20px;text-align:left}
+  .moment.alt .moment-text{order:2;justify-self:start;text-align:left}
+  .moment.alt .moment-formula{order:1;justify-self:start}
+  .moment-formula{font-size:clamp(72px,22vw,140px);letter-spacing:-5px}
+  .moment h3{letter-spacing:-1.6px}
+  .ritual,.final{padding:100px 20px}
+  .clock{letter-spacing:-8px}
+}
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="respyr-final.html">
+      <img src="images/respyr logo.png" alt="Respyr" class="brand-logo" decoding="async">
+    </a>
+    <a class="back-link" href="respyr-final.html">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </a>
+  </div>
+</header>
+
+<!-- 1. HERO -->
+<section class="hero">
+  <div class="eyb reveal">The Respyr device</div>
+  <h1 class="reveal">One breath. <em>Three signals.</em></h1>
+  <p class="hero-sub reveal">Three independent semiconductor sensors. One brushed aluminum body. The full chemistry of how today is going.</p>
+  <div class="hero-device reveal">
+    <img src="images/device-transparent.png" alt="Respyr device" decoding="async">
+  </div>
+</section>
+
+<!-- 2. STAT STRIP -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat reveal"><div class="stat-n">3</div><div class="stat-l">Biomarkers</div></div>
+    <div class="stat reveal"><div class="stat-n">60 days</div><div class="stat-l">Battery</div></div>
+    <div class="stat reveal"><div class="stat-n">5+ yrs</div><div class="stat-l">Sensor life</div></div>
+    <div class="stat reveal"><div class="stat-n">$0</div><div class="stat-l">Subscription</div></div>
+  </div>
+</section>
+
+<!-- 3. SENSORS — typography as art -->
+<section class="sensors">
+  <div class="sensors-head">
+    <div class="eyb reveal">What it reads</div>
+    <h2 class="reveal">Most breath devices measure one thing. <em>Respyr measures three.</em></h2>
+    <p class="sub reveal">Three molecules. Three different stories your body is telling right now.</p>
+  </div>
+
+  <div class="sensor-moments">
+
+    <div class="moment reveal">
+      <div class="moment-formula">C<sub>3</sub>H<sub>6</sub>O</div>
+      <div class="moment-text">
+        <span class="moment-tag">Acetone · Fuel</span>
+        <h3>How you're burning energy.</h3>
+        <p class="moment-p">Acetone rises on your breath when fat oxidation rises. The sensor reads it directly — no glucose proxy, no calorie math.</p>
+        <span class="moment-meta">Fuel Balance Trend · Energy Source Trend</span>
+      </div>
+    </div>
+
+    <div class="moment alt reveal">
+      <div class="moment-text">
+        <span class="moment-tag">Ethanol · Recovery</span>
+        <h3>How hard your body is working.</h3>
+        <p class="moment-p">Endogenous ethanol reflects cellular strain. Surfaces the workload that HRV and resting heart rate can't see.</p>
+        <span class="moment-meta">Recovery Activity Trend · Metabolic Load Trend</span>
+      </div>
+      <div class="moment-formula">C<sub>2</sub>H<sub>5</sub>OH</div>
+    </div>
+
+    <div class="moment reveal">
+      <div class="moment-formula">H<sub>2</sub></div>
+      <div class="moment-text">
+        <span class="moment-tag">Hydrogen · Digestion</span>
+        <h3>How well today's meals landed.</h3>
+        <p class="moment-p">Hydrogen reflects gut microbial activity. Tells you which foods your body processed cleanly — and which caused strain.</p>
+        <span class="moment-meta">Nutrient Balance Trend · Digestive Activity Trend</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 4. RITUAL — animated clock -->
+<section class="ritual">
+  <div class="eyb reveal">The ritual</div>
+  <h2 class="reveal">A reading takes <em>eleven seconds.</em></h2>
+  <p class="ritual-sub reveal">No fasting. No needles. No patches. Power on, breathe in, breathe out — the result is in your phone before you put the device down.</p>
+
+  <div class="clock reveal" aria-label="11 seconds">
+    <span class="clock-num" id="clockNum">0</span><span class="clock-unit">s</span>
+  </div>
+  <p class="ritual-tagline reveal">Active reading time. <strong>Result in the app within 60 seconds.</strong></p>
+</section>
+
+<!-- 5. CLOSING CTA -->
+<section class="final">
+  <div class="eyb reveal">Ready when you are</div>
+  <h2 class="reveal">Your breath is more than air. <em>Start reading what it means.</em></h2>
+  <p class="reveal">One purchase. No subscriptions. Free US shipping. 30-day risk-free returns.</p>
+  <a class="btn-primary reveal" href="respyr-final.html#shop">
+    Reserve your Respyr · $299
+    <span class="arrow"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+  </a>
+  <div class="final-note reveal">Pre-orders ship Q3 2026 · no payment until shipment.</div>
+</section>
+
+<script>
+// Reveal-on-scroll
+(function(){
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+
+// 11s clock — counts up when the clock scrolls into view (respects reduced-motion)
+(function(){
+  const num = document.getElementById('clockNum');
+  if (!num) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { num.textContent = '11'; return; }
+  let played = false;
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !played) {
+      played = true;
+      const start = performance.now();
+      const dur = 1400;
+      const ease = t => 1 - Math.pow(1 - t, 3);
+      const tick = (now) => {
+        const t = Math.min(1, (now - start) / dur);
+        num.textContent = Math.round(ease(t) * 11);
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      obs.disconnect();
+    }
+  }, { threshold: 0.4 });
+  obs.observe(num.closest('.clock'));
+})();
+</script>
+
+</body>
+</html>
