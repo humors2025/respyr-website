@@ -27,29 +27,37 @@ let siteJs = html.match(/<script>([\s\S]*?)<\/script>/)[1];
 siteJs = siteJs.replace(/(["'`])images\//g, '$1/images/'); // fix asset paths in JS
 fs.writeFileSync(path.join(OUT, 'public', 'scripts', 'site.js'), siteJs.trim() + '\n');
 
-// ---- 3. Section map (verified start lines, 1-indexed) ----
-const SECTIONS = [
-  ['Grain', 1081],
-  ['AnnouncementBar', 1083],
-  ['Navbar', 1087],
-  ['Hero', 1122],
-  ['Ticker', 1173],
-  ['Why', 1190],
-  ['Science', 1268],
-  ['Layers', 1327],
-  ['LifestyleBanner', 1378],
-  ['ProductVideo', 1399],
-  ['Steps', 1438],
-  ['Testimonials', 1504],
-  ['Showcase', 1587],
-  ['Press', 1636],
-  ['Shop', 1651],
-  ['Faq', 1764],
-  ['FinalCta', 1784],
-  ['Footer', 1799],
-  ['CartDrawer', 1829],
+// ---- 3. Section map by stable HTML markers (resilient to line-number shifts) ----
+const SECTION_MARKERS = [
+  ['Grain', '<div class="grain">'],
+  ['AnnouncementBar', '<div class="annc">'],
+  ['Navbar', '<nav class="nav">'],
+  ['Hero', '<section class="hero">'],
+  ['Ticker', '<div class="ticker">'],
+  ['Why', '<section class="section why">'],
+  ['Science', '<section class="section biomarkers science"'],
+  ['Layers', '<section class="layers"'],
+  ['LifestyleBanner', '<section class="lifestyle-banner">'],
+  ['ProductVideo', '<section class="section product-vid"'],
+  ['Steps', '<section class="section steps">'],
+  ['Testimonials', '<section class="section testimonials"'],
+  ['Showcase', '<section class="section showcase">'],
+  ['Press', '<section class="press">'],
+  ['Shop', '<section class="shop-page"'],
+  ['Faq', '<section class="section faq"'],
+  ['FinalCta', '<section class="final-cta">'],
+  ['Footer', '<footer class="footer">'],
+  ['CartDrawer', '<div class="drawer-overlay"'],
 ];
-const BODY_END = 1852; // last body line before the <script> at 1853
+// Resolve each marker to its 0-indexed start line (fail loudly if markup changes).
+const SECTIONS = SECTION_MARKERS.map(([name, marker]) => {
+  const idx = lines.findIndex((l) => l.includes(marker));
+  if (idx === -1) throw new Error(`convert.js: section marker not found for ${name}: ${marker}`);
+  return [name, idx];
+});
+// Body ends at the inline (attribute-less) <script> block.
+const BODY_END = lines.findIndex((l) => l.trim() === '<script>');
+if (BODY_END === -1) throw new Error('convert.js: inline <script> block not found');
 
 let imgCounter = 0;
 function externalizeAndFixPaths(chunk) {
@@ -76,8 +84,8 @@ function externalizeAndFixPaths(chunk) {
 const summary = [];
 for (let i = 0; i < SECTIONS.length; i++) {
   const [name, start] = SECTIONS[i];
-  const end = (i + 1 < SECTIONS.length) ? SECTIONS[i + 1][1] - 1 : BODY_END;
-  let chunk = lines.slice(start - 1, end).join('\n').trim();
+  const end = (i + 1 < SECTIONS.length) ? SECTIONS[i + 1][1] : BODY_END; // exclusive
+  let chunk = lines.slice(start, end).join('\n').trim();
   chunk = externalizeAndFixPaths(chunk);
   const jsx =
 `// ${name} — this section's markup (raw HTML, owned by this component).
