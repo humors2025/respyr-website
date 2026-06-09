@@ -73,10 +73,11 @@ for (let i = 0; i < SECTIONS.length; i++) {
   let chunk = lines.slice(start - 1, end).join('\n').trim();
   chunk = externalizeAndFixPaths(chunk);
   const jsx =
-`export default function ${name}() {
-  return (
-    <div style={{ display: 'contents' }} suppressHydrationWarning dangerouslySetInnerHTML={{ __html: ${JSON.stringify(chunk)} }} />
-  );
+`// ${name} — this section's markup (raw HTML, owned by this component).
+export const html = ${JSON.stringify(chunk)};
+
+export default function ${name}() {
+  return <div style={{ display: 'contents' }} suppressHydrationWarning dangerouslySetInnerHTML={{ __html: html }} />;
 }
 `;
   fs.writeFileSync(path.join(OUT, 'components', `${name}.jsx`), jsx);
