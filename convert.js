@@ -63,6 +63,13 @@ function externalizeAndFixPaths(chunk) {
   });
   // fix relative asset paths -> absolute public paths
   chunk = chunk.replace(/="images\//g, '="/images/').replace(/='images\//g, "='/images/");
+  // rewrite cross-page links from the old .html files to Next.js routes
+  chunk = chunk
+    .replace(/href="respyr-final\.html#/g, 'href="/#')
+    .replace(/href="respyr-final\.html"/g, 'href="/"')
+    .replace(/href="respyr-about\.html"/g, 'href="/about"')
+    .replace(/href="respyr-contact\.html"/g, 'href="/contact"')
+    .replace(/href="respyr-read-more\.html"/g, 'href="/read-more"');
   return chunk;
 }
 

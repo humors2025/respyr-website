@@ -1,5 +1,3 @@
-import './globals.css';
-
 export const metadata = {
   title: "Respyr · Your breath is more than air. It's metabolic information.",
   description:

@@ -1,3 +1,4 @@
+import './globals.css';
 // The page markup is static HTML owned per-section by the component files in
 // ../components. We assemble it into a SINGLE dangerouslySetInnerHTML container
 // rather than 19 sibling React nodes — that avoids React hydration mismatches
