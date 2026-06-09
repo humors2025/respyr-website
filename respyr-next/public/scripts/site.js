@@ -397,13 +397,23 @@ window.addEventListener('load', () => {
     nutrition: '/images/nutrition.png',
     trends: '/images/trend.png'
   };
-  tabs.forEach(tab => tab.addEventListener('click', () => {
+  let idx = Math.max(0, tabs.findIndex(t => t.classList.contains('is-active')));
+  let auto;
+  function activate(tab){
     tabs.forEach(t => { t.classList.remove('is-active'); t.setAttribute('aria-selected','false'); });
     tab.classList.add('is-active');
     tab.setAttribute('aria-selected','true');
     const key = tab.textContent.trim().toLowerCase();
     if(phoneImg && screens[key]) phoneImg.src = screens[key];
-  }));
+    idx = tabs.indexOf(tab);
+  }
+  function startAuto(){ stopAuto(); auto = setInterval(() => { activate(tabs[(idx + 1) % tabs.length]); }, 2000); }
+  function stopAuto(){ if(auto){ clearInterval(auto); auto = null; } }
+  tabs.forEach(tab => tab.addEventListener('click', () => { activate(tab); startAuto(); }));
+  // Pause auto-rotation while the user is hovering the tab bar.
+  bar.addEventListener('mouseenter', stopAuto);
+  bar.addEventListener('mouseleave', startAuto);
+  startAuto();
 })();
 
 /* ── Why-section image carousel — cross-fade + clickable dots ── */

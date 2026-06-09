@@ -22,7 +22,7 @@ import { html as faq } from '../components/Faq';
 import { html as finalCta } from '../components/FinalCta';
 import { html as footer } from '../components/Footer';
 import { html as cartDrawer } from '../components/CartDrawer';
-import SiteScripts from '../components/SiteScripts';
+import ScriptLoader from '../components/ScriptLoader';
 
 const PAGE_HTML = [
   grain,
@@ -50,7 +50,15 @@ export default function Home() {
   return (
     <>
       <div style={{ display: 'contents' }} suppressHydrationWarning dangerouslySetInnerHTML={{ __html: PAGE_HTML }} />
-      <SiteScripts />
+      {/* Loaded after hydration so handlers bind to the final DOM. GSAP is
+          best-effort; site.js falls back to IntersectionObserver without it. */}
+      <ScriptLoader
+        srcs={[
+          'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
+          'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js',
+          '/scripts/site.js',
+        ]}
+      />
     </>
   );
 }
