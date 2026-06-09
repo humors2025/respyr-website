@@ -1,4 +1,23 @@
+<<<<<<< HEAD
 node_modules/
 .next/
 out/
 .DS_Store
+=======
+# Large self-contained / shareable builds (exceed sensible repo size)
+respyr-share.html
+respyr-share.zip
+respyr-final-shareable.html
+respyr-final-shareable.zip
+respyr-about-share.html
+
+# Old/superseded versions
+respyr-final (1).html
+
+# Local tooling / dependencies
+.claude/
+node_modules/
+
+# Dev artifacts
+mobile-qr.png
+>>>>>>> origin/main
