@@ -1327,7 +1327,7 @@ body.menu-open .nav-menu-btn .ico-x{display:block}
 <section class="layers" id="layers">
   <div class="layers-head">
     <div class="eyb reveal">Three intelligence layers</div>
-    <h2 class="reveal">11 exhale. <em>Three windows into your metabolism.</em></h2>
+    <h2 class="reveal">One exhale. <em>Three windows into your metabolism.</em></h2>
     <p class="reveal">Each biomarker maps to a metabolic dimension — fuel, recovery, and digestion — giving you a real-time picture no blood test can match.</p>
   </div>
   <div class="layers-carousel">
@@ -1424,10 +1424,6 @@ body.menu-open .nav-menu-btn .ico-x{display:block}
         <source src="images/product-video.mp4" type="video/mp4" media="(min-width: 1100px)" />
               <source src="images/product-video-1080p.mp4" type="video/mp4" />
       </video>
-      <div class="video-overlay-stat">
-        <span class="l">Reading completes in</span>
-        <span class="v">60 seconds</span>
-      </div>
     </div>
   </div>
 </section>
@@ -2250,13 +2246,23 @@ window.addEventListener('load', () => {
     nutrition: 'images/nutrition.png',
     trends: 'images/trend.png'
   };
-  tabs.forEach(tab => tab.addEventListener('click', () => {
+  let idx = Math.max(0, tabs.findIndex(t => t.classList.contains('is-active')));
+  let auto;
+  function activate(tab){
     tabs.forEach(t => { t.classList.remove('is-active'); t.setAttribute('aria-selected','false'); });
     tab.classList.add('is-active');
     tab.setAttribute('aria-selected','true');
     const key = tab.textContent.trim().toLowerCase();
     if(phoneImg && screens[key]) phoneImg.src = screens[key];
-  }));
+    idx = tabs.indexOf(tab);
+  }
+  function startAuto(){ stopAuto(); auto = setInterval(() => { activate(tabs[(idx + 1) % tabs.length]); }, 2000); }
+  function stopAuto(){ if(auto){ clearInterval(auto); auto = null; } }
+  tabs.forEach(tab => tab.addEventListener('click', () => { activate(tab); startAuto(); }));
+  // Pause auto-rotation while the user is hovering the tab bar.
+  bar.addEventListener('mouseenter', stopAuto);
+  bar.addEventListener('mouseleave', startAuto);
+  startAuto();
 })();
 
 /* ── Why-section image carousel — cross-fade + clickable dots ── */

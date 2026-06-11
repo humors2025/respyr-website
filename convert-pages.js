@@ -54,7 +54,7 @@ for (const p of PAGES) {
 
   const pageJsx =
 `import './styles.css';
-import ExternalScript from '../../components/ExternalScript';
+import ScriptLoader from '../../components/ScriptLoader';
 
 export const metadata = {
   title: ${JSON.stringify(title)},
@@ -67,7 +67,7 @@ export default function Page() {
   return (
     <>
       <div suppressHydrationWarning dangerouslySetInnerHTML={{ __html: html }} />
-      <ExternalScript src="/scripts/${p.name}.js" />
+      <ScriptLoader srcs={['/scripts/${p.name}.js']} />
     </>
   );
 }

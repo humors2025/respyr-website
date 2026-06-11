@@ -1,5 +1,5 @@
 import './styles.css';
-import ExternalScript from '../../components/ExternalScript';
+import ScriptLoader from '../../components/ScriptLoader';
 
 export const metadata = {
   title: "The Respyr device · A closer look",
@@ -12,7 +12,7 @@ export default function Page() {
   return (
     <>
       <div suppressHydrationWarning dangerouslySetInnerHTML={{ __html: html }} />
-      <ExternalScript src="/scripts/read-more.js" />
+      <ScriptLoader srcs={['/scripts/read-more.js']} />
     </>
   );
 }

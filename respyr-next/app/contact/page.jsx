@@ -1,5 +1,5 @@
 import './styles.css';
-import ExternalScript from '../../components/ExternalScript';
+import ScriptLoader from '../../components/ScriptLoader';
 
 export const metadata = {
   title: "Contact support · Respyr",
@@ -12,7 +12,7 @@ export default function Page() {
   return (
     <>
       <div suppressHydrationWarning dangerouslySetInnerHTML={{ __html: html }} />
-      <ExternalScript src="/scripts/contact.js" />
+      <ScriptLoader srcs={['/scripts/contact.js']} />
     </>
   );
 }

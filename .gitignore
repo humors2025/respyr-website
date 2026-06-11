@@ -1,9 +1,8 @@
-<<<<<<< HEAD
+# Dependencies / build output (Next.js)
 node_modules/
 .next/
 out/
-.DS_Store
-=======
+
 # Large self-contained / shareable builds (exceed sensible repo size)
 respyr-share.html
 respyr-share.zip
@@ -16,8 +15,10 @@ respyr-final (1).html
 
 # Local tooling / dependencies
 .claude/
-node_modules/
 
 # Dev artifacts
 mobile-qr.png
->>>>>>> origin/main
+respyr-nextjs.zip
+
+# OS
+.DS_Store
