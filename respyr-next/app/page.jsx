@@ -17,6 +17,7 @@ import { html as steps } from '../components/Steps';
 import { html as testimonials } from '../components/Testimonials';
 import { html as showcase } from '../components/Showcase';
 import { html as press } from '../components/Press';
+import { html as deviceSpotlight } from '../components/DeviceSpotlight';
 import { html as shop } from '../components/Shop';
 import { html as faq } from '../components/Faq';
 import { html as finalCta } from '../components/FinalCta';
@@ -29,6 +30,7 @@ const PAGE_HTML = [
   announcementBar,
   navbar,
   hero,
+  deviceSpotlight,
   ticker,
   why,
   science,

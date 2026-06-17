@@ -313,7 +313,7 @@ button{font-family:inherit;cursor:pointer}
 
 /* Left image side */
 .science-card-img{position:relative;overflow:hidden;background:#1a1410}
-.science-card-img img{width:100%;height:100%;object-fit:contain;display:block;transition:transform 6s ease}
+.science-card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 6s ease}
 .science-card:hover .science-card-img img{transform:scale(1.06)}
 .science-card-num{position:absolute;top:20px;left:20px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;font-family:var(--rs-font);font-size:14px;font-weight:600;letter-spacing:-0.28px;color:var(--rs-text-primary);z-index:2;box-shadow:0 4px 14px rgba(0,0,0,0.18)}
 .science-card--blue   .science-card-num{color:var(--rs-blue)}
@@ -1057,3 +1057,28 @@ body.menu-open .nav-menu-btn .ico-x{display:block}
   .shop-gallery{max-width:320px}
   .shop-trust-list{grid-template-columns:1fr}
 }
+
+/* ── Device spotlight — dramatic product reveal ──── */
+.device-spotlight{position:relative;overflow:hidden;isolation:isolate;background:#070a12;padding:96px 24px 0;display:flex;justify-content:center}
+.device-spotlight::before{content:'';position:absolute;inset:0;z-index:-2;background:
+  radial-gradient(135% 85% at 24% 4%, rgba(120,165,255,0.40) 0%, rgba(48,139,249,0.14) 32%, transparent 60%),
+  linear-gradient(210deg,#05070d 0%,#0a1020 40%,#15203f 72%,#243a66 100%)}
+.device-spotlight::after{content:'';position:absolute;top:-28%;left:0;width:82%;height:160%;z-index:-1;pointer-events:none;
+  background:linear-gradient(242deg,transparent 28%,rgba(160,195,255,0.24) 44%,rgba(205,226,255,0.58) 51%,rgba(160,195,255,0.22) 59%,transparent 76%);
+  filter:blur(26px);transform:rotate(-6deg)}
+.device-spotlight-inner{position:relative;max-width:1080px;width:100%;text-align:center}
+.spotlight-eyb{display:inline-flex;align-items:center;gap:8px;font-family:var(--rs-font);font-size:13px;font-weight:600;letter-spacing:-0.26px;color:#bcd3ff;background:rgba(48,139,249,0.14);border:1px solid rgba(48,139,249,0.32);padding:6px 16px;border-radius:var(--rs-r-pill,999px);margin-bottom:24px}
+.spotlight-eyb::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--rs-blue);box-shadow:0 0 10px var(--rs-blue)}
+.spotlight-h{font-family:var(--rs-font);color:#fff;font-weight:600;font-size:clamp(34px,5.4vw,68px);line-height:1.04;letter-spacing:-1.8px;margin:0}
+.spotlight-h em{display:block;font-style:normal;background:linear-gradient(90deg,#308bf9,#8fb8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.spotlight-sub{font-family:var(--rs-font);color:rgba(220,230,255,0.74);font-size:clamp(15px,1.6vw,18px);line-height:1.6;letter-spacing:-0.26px;max-width:540px;margin:18px auto 0;font-weight:400}
+.spotlight-device{position:relative;margin-top:8px;display:flex;justify-content:center;align-items:center;perspective:1200px}
+.orbit3d{position:relative;transform-style:preserve-3d}
+.spotlight-device-img{display:block;width:min(440px,72vw);height:auto;transform-origin:center bottom;filter:drop-shadow(0 50px 90px rgba(0,0,0,0.6)) drop-shadow(0 0 60px rgba(80,140,255,0.25));animation:spotlightFloat 6.5s ease-in-out infinite}
+/* 3D text cylinder — upright letters arranged around the device on a ring,
+   spinning in depth so the front reads clearly and the back passes behind it. */
+.orbit3d-ring{position:absolute;top:50%;left:50%;width:0;height:0;transform-style:preserve-3d;transform:rotateX(15deg);animation:ringSpin 16s linear infinite}
+@keyframes ringSpin{from{transform:rotateX(15deg) rotateY(0deg)}to{transform:rotateX(15deg) rotateY(360deg)}}
+.o3d-c{position:absolute;font-family:var(--rs-font);font-size:22px;font-weight:700;color:rgba(125,175,255,0.95);white-space:nowrap}
+@keyframes spotlightFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+@media(max-width:600px){.device-spotlight{padding:64px 18px 0}@keyframes spotlightFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}}

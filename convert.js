@@ -33,6 +33,7 @@ const SECTION_MARKERS = [
   ['AnnouncementBar', '<div class="annc">'],
   ['Navbar', '<nav class="nav">'],
   ['Hero', '<section class="hero">'],
+  ['DeviceSpotlight', '<section class="device-spotlight">'],
   ['Ticker', '<div class="ticker">'],
   ['Why', '<section class="section why">'],
   ['Science', '<section class="section biomarkers science"'],
