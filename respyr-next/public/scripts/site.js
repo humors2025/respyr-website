@@ -1,3 +1,31 @@
+// ── Hero headline: rotate the first word through a list ──
+(function(){
+  const el = document.getElementById('heroRotate');
+  if(!el) return;
+  const words = ['Fitness','Weight loss','Muscle gain','Weight gain'];
+  let i = 0;
+  setInterval(function(){
+    el.classList.add('is-swapping');
+    setTimeout(function(){
+      i = (i + 1) % words.length;
+      el.textContent = words[i];
+      el.classList.remove('is-swapping');
+    }, 700);
+  }, 3200);
+})();
+
+// ── Nav: transparent over hero, turns solid white on scroll ──
+(function(){
+  const nav = document.querySelector('.nav');
+  if(!nav) return;
+  function onNavScroll(){
+    if(window.scrollY > 8) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }
+  window.addEventListener('scroll', onNavScroll, {passive:true});
+  onNavScroll();
+})();
+
 // ── Scroll Progress Bar ──────────────────
 (function(){
   const bar = document.getElementById('scroll-progress');
