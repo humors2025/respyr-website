@@ -6,6 +6,7 @@ import './globals.css';
 import { html as grain } from '../components/Grain';
 import { html as announcementBar } from '../components/AnnouncementBar';
 import { html as navbar } from '../components/Navbar';
+import { html as hero2 } from '../components/Hero2';
 import { html as hero } from '../components/Hero';
 import { html as ticker } from '../components/Ticker';
 import { html as why } from '../components/Why';
@@ -16,7 +17,7 @@ import { html as productVideo } from '../components/ProductVideo';
 import { html as steps } from '../components/Steps';
 import { html as testimonials } from '../components/Testimonials';
 import { html as showcase } from '../components/Showcase';
-import { html as press } from '../components/Press';
+import { html as deviceSpotlight } from '../components/DeviceSpotlight';
 import { html as shop } from '../components/Shop';
 import { html as faq } from '../components/Faq';
 import { html as finalCta } from '../components/FinalCta';
@@ -28,6 +29,7 @@ const PAGE_HTML = [
   grain,
   announcementBar,
   navbar,
+  hero2,
   hero,
   ticker,
   why,
@@ -35,11 +37,11 @@ const PAGE_HTML = [
   layers,
   lifestyleBanner,
   productVideo,
+  deviceSpotlight,
   steps,
-  testimonials,
   showcase,
-  press,
   shop,
+  testimonials,
   faq,
   finalCta,
   footer,
