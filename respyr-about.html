@@ -52,7 +52,7 @@ img{max-width:100%;display:block}
 /* ── 1. HERO ─────────────────────────────────── */
 .hero{padding:200px 24px 120px;text-align:center;position:relative;overflow:hidden;background:#0a0a0b}
 .hero-bg{position:absolute;inset:0;z-index:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:0.75}
+.hero-bg img,.hero-bg video{width:100%;height:100%;object-fit:cover;opacity:0.75}
 .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,11,0.05) 0%,rgba(10,10,11,0.2) 50%,rgba(10,10,11,0.65) 100%)}
 .hero > *:not(.hero-bg){position:relative;z-index:1}
 .hero .eyb{margin-bottom:32px}
@@ -258,7 +258,7 @@ img{max-width:100%;display:block}
 
 <!-- 1. HERO -->
 <section class="hero">
-  <div class="hero-bg"><img src="images/about-hero.png" alt="" decoding="async"></div>
+  <div class="hero-bg"><img src="images/about-hero.jpg" alt="" decoding="async"></div>
   <div class="eyb reveal">About Respyr</div>
   <h1 class="reveal">We're not selling a metric. <em>We're handing your body back.</em></h1>
   <p class="hero-sub reveal">Three people. Three sensors. One belief — that the answer to your metabolism is already inside you, and you only need a way to read it.</p>
@@ -344,9 +344,9 @@ img{max-width:100%;display:block}
 
   <div class="founders-grid">
     <article class="founder reveal">
-      <div class="founder-avatar" aria-hidden="true">AP</div>
-      <h3 class="founder-name">Dr. Asha Patel</h3>
-      <p class="founder-role">Co-founder · CEO</p>
+      <div class="founder-avatar" aria-hidden="true">AJ</div>
+      <h3 class="founder-name">Ankur Jaiswal</h3>
+      <p class="founder-role">Founder · CEO</p>
       <p class="founder-bio">Spent eight years at Verily building consumer health hardware. PhD in Biomedical Engineering from MIT. Her own GLP-1 experience was the catalyst.</p>
       <div class="founder-meta">
         <span class="founder-chip">ex-Verily</span>
@@ -356,8 +356,8 @@ img{max-width:100%;display:block}
     </article>
 
     <article class="founder reveal">
-      <div class="founder-avatar" aria-hidden="true">ML</div>
-      <h3 class="founder-name">Marcus Lin</h3>
+      <div class="founder-avatar" aria-hidden="true">KV</div>
+      <h3 class="founder-name">Kushal Vyas</h3>
       <p class="founder-role">Co-founder · CTO</p>
       <p class="founder-bio">Designed three generations of biosensors on the Apple Watch hardware team. Believes a device should disappear after the first reading.</p>
       <div class="founder-meta">
@@ -368,9 +368,9 @@ img{max-width:100%;display:block}
     </article>
 
     <article class="founder reveal">
-      <div class="founder-avatar" aria-hidden="true">JO</div>
-      <h3 class="founder-name">Dr. James Okafor</h3>
-      <p class="founder-role">Co-founder · Chief Science</p>
+      <div class="founder-avatar" aria-hidden="true">CK</div>
+      <h3 class="founder-name">Chandan Kumar</h3>
+      <p class="founder-role">Co-founder · CTO</p>
       <p class="founder-bio">Published 30+ papers on volatile breath compounds at Oxford. Joined Respyr the week he realized lab science was sitting unused.</p>
       <div class="founder-meta">
         <span class="founder-chip">Oxford</span>

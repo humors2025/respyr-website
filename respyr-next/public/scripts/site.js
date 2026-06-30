@@ -1,3 +1,46 @@
+// ── Review story lightbox (AI testimonial videos) ──
+window.openStory = function(src){
+  var m = document.getElementById('storyModal'), v = document.getElementById('storyVideo');
+  if(!m || !v) return;
+  m.classList.add('open');
+  m.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+  function tryPlay(){ try{ v.currentTime = 0; }catch(e){} var p = v.play(); if(p && p.catch){ p.catch(function(){}); } }
+  if(v.getAttribute('src') !== src){
+    v.setAttribute('src', src);
+    v.preload = 'auto';
+    v.load();                       // force the browser to actually buffer the new source
+    v.addEventListener('canplay', tryPlay, { once: true });
+  } else {
+    tryPlay();
+  }
+};
+window.closeStory = function(){
+  var m = document.getElementById('storyModal'), v = document.getElementById('storyVideo');
+  if(!m) return;
+  m.classList.remove('open');
+  m.setAttribute('aria-hidden','true');
+  if(v){ v.pause(); }
+  document.body.style.overflow = '';
+};
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape') window.closeStory(); });
+
+// ── Review cards: auto-play the talking-head videos (muted) while the section is in view ──
+(function(){
+  var medias = document.querySelectorAll('.review-media');
+  if(!medias.length) return;
+  function play(m){ var v = m.querySelector('.review-vid'); if(!v) return; v.muted = true; m.classList.add('is-playing'); var p = v.play(); if(p && p.catch){ p.catch(function(){}); } }
+  function pause(m){ var v = m.querySelector('.review-vid'); if(v) v.pause(); }
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ play(en.target); } else { pause(en.target); } });
+    }, { threshold: 0.4 });
+    medias.forEach(function(m){ io.observe(m); });
+  } else {
+    medias.forEach(play);
+  }
+})();
+
 // ── Hero headline: rotate the first word through a list ──
 (function(){
   const el = document.getElementById('heroRotate');

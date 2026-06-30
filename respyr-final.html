@@ -504,8 +504,8 @@ button{font-family:inherit;cursor:pointer}
 .product-vid-list{display:none}
 
 /* BOTTOM ROW — image card aligned with the headline column (grid-column: 2) */
-.product-vid-visual{grid-column:2;position:relative;width:100%;max-width:none;margin:0;height:auto;aspect-ratio:16/9;min-height:0;border-radius:24px;overflow:hidden;background:#0A0805;box-shadow:0 24px 60px rgba(37,37,37,0.18),0 6px 16px rgba(37,37,37,0.08);border:1px solid var(--rs-border)}
-.product-vid-visual video,.product-vid-visual img{width:100%;height:100%;object-fit:cover;display:block;transform-origin:center center;animation:vidSlowZoom 18s ease-in-out infinite alternate;will-change:transform}
+.product-vid-visual{grid-column:2;position:relative;width:100%;max-width:none;margin:0;height:auto;aspect-ratio:16/9;min-height:0;border-radius:24px;overflow:hidden;isolation:isolate;transform:translateZ(0);background:#0A0805;box-shadow:0 24px 60px rgba(37,37,37,0.18),0 6px 16px rgba(37,37,37,0.08),0 0 0 1px rgba(37,37,37,0.06)}
+.product-vid-visual video,.product-vid-visual img{width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit}
 @keyframes vidSlowZoom{
   from{ transform:scale(1.00); }
   to  { transform:scale(1.10); }
@@ -662,64 +662,54 @@ button{font-family:inherit;cursor:pointer}
 @media(max-width:780px){.story.story--compact{padding:40px 18px 56px}.story.story--compact .story-quote{padding:18px 20px}}
 
 /* TESTIMONIALS */
-/* === TESTIMONIALS — sticky header on left, 2-col card grid on right === */
-.testimonials{background:var(--rs-page-bg);font-family:var(--rs-font);padding:96px 20px;overflow:hidden}
-.testimonials .section-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:minmax(0,0.42fr) minmax(0,1fr);gap:60px;align-items:start}
+/* === REVIEWS — centered header + row of portrait story cards === */
+.testimonials{background:var(--rs-page-bg);font-family:var(--rs-font);padding:96px 20px}
+.testimonials .section-inner{max-width:1240px;margin:0 auto}
 
-/* LEFT — sticky header */
-.testimonials-head{position:sticky;top:141px;text-align:left;max-width:none;margin:0;padding-top:20px}
-/* Eyebrow chip — matches the unified daily-ritual pill pattern */
-.testimonials-head .section-eyb{display:inline-flex;align-items:center;gap:8px;background:var(--rs-white);color:var(--rs-text-primary);font-family:var(--rs-font);font-size:12px;font-weight:500;letter-spacing:-0.24px;text-transform:none;padding:8px 16px;border-radius:var(--rs-r-pill);border:1px solid var(--rs-border);box-shadow:0 1px 2px rgba(37,37,37,0.04);margin:0 0 22px;width:max-content}
+/* Centered header */
+.testimonials-head{text-align:center;max-width:680px;margin:0 auto 56px}
+.testimonials-head .section-eyb{display:inline-flex;align-items:center;gap:8px;font-family:var(--rs-font);font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--rs-text-muted);margin:0 0 18px}
 .testimonials-head .section-eyb::before{content:'';width:7px;height:7px;background:var(--rs-blue);border-radius:50%;animation:pulse-dot 2s ease-in-out infinite;box-shadow:0 0 10px var(--rs-blue)}
-.testimonials .section-h2{font-family:var(--rs-font);font-weight:600;font-size:clamp(28px,3.4vw,44px);line-height:1.1;letter-spacing:-1.3px;color:var(--rs-text-primary);margin:0 0 18px;font-style:normal;text-align:left}
+.testimonials .section-h2{font-family:var(--rs-font);font-weight:600;font-size:clamp(30px,4vw,48px);line-height:1.08;letter-spacing:-1.4px;color:var(--rs-text-primary);margin:0;font-style:normal;text-align:center}
 .testimonials .section-h2 em{font-style:normal;color:var(--rs-blue);font-weight:600}
 .testimonials .section-h2 .b{display:block}
+.testimonials-sub{font-family:var(--rs-font);font-size:16px;line-height:1.6;letter-spacing:-0.3px;color:var(--rs-text-secondary);margin:16px auto 0;max-width:540px;font-weight:400}
 
-/* RIGHT — vertical-marquee with two columns scrolling in opposite directions (Vega-style) */
-.testimonials-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;height:620px;overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 8%,#000 92%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 8%,#000 92%,transparent 100%)}
-.testimonials-col{display:flex;flex-direction:column;gap:14px;will-change:transform}
-.testimonials-col[data-dir="up"]{animation:marquee-up 36s linear infinite}
-.testimonials-col[data-dir="down"]{animation:marquee-down 36s linear infinite}
-.testimonials-grid:hover .testimonials-col,
-.testimonials-grid:focus-within .testimonials-col,
-.testimonials:hover .testimonials-col,
-.testimonials:focus-within .testimonials-col{animation-play-state:paused}
-@keyframes marquee-up{
-  from{transform:translateY(0)}
-  to  {transform:translateY(-50%)}
-}
-@keyframes marquee-down{
-  from{transform:translateY(-50%)}
-  to  {transform:translateY(0)}
-}
-@media(prefers-reduced-motion: reduce){.testimonials-col{animation:none !important;transform:none !important}.testimonials-grid{height:auto;-webkit-mask-image:none;mask-image:none}}
-.testimonial-card{background:var(--rs-white);border:1px solid var(--rs-border);border-radius:var(--rs-r-card);padding:20px;position:relative;transition:transform 0.2s ease,box-shadow 0.2s ease,border-color 0.2s ease;box-shadow:0 1px 2px rgba(37,37,37,0.04);display:flex;flex-direction:column;gap:14px}
-.testimonial-card:hover{transform:translateY(-2px);border-color:rgba(48,139,249,0.5);box-shadow:0 10px 24px rgba(48,139,249,0.08)}
+/* Card row */
+.reviews-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+.review-card{background:var(--rs-white);border:1px solid var(--rs-border);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(37,37,37,0.04);transition:transform 0.25s ease,box-shadow 0.25s ease}
+.review-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(37,37,37,0.12)}
 
-/* Stars row hidden — modern testimonial-card style */
-.testimonial-stars{display:none}
+/* Portrait media with overlaid headline + pill */
+.review-media{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--rs-surface,#f5f7fa);cursor:pointer}
+.review-media:focus-visible{outline:3px solid var(--rs-blue);outline-offset:2px}
 
-/* Author row sits ON TOP (avatar + name + role) */
-.testimonial-attrib{order:1;display:flex;align-items:center;gap:12px;padding:0;border-top:none;border-bottom:1px solid var(--rs-border);padding-bottom:14px}
-.testimonial-avatar{width:40px;height:40px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;font-family:var(--rs-font);font-style:normal;font-size:12px;color:#fff;flex-shrink:0;font-weight:600;letter-spacing:-0.24px}
-.testimonial-avatar img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
-.tav-1{background:linear-gradient(135deg,#6c8fff,var(--rs-blue))}
-.tav-2{background:linear-gradient(135deg,#9c8bff,#6c5dd3)}
-.tav-3{background:linear-gradient(135deg,#7ad58a,#3faf58)}
-.tav-4{background:linear-gradient(135deg,#ffb37a,#e48326)}
-.tav-5{background:linear-gradient(135deg,#ffadb3,#ec4899)}
-.tav-6{background:linear-gradient(135deg,#a4b8d0,var(--rs-text-secondary))}
-.testimonial-name{font-family:var(--rs-font);font-size:14px;font-weight:600;color:var(--rs-text-primary);letter-spacing:-0.28px;line-height:1.2}
-.testimonial-role{font-family:var(--rs-font);font-size:12px;color:var(--rs-text-secondary);margin-top:2px;letter-spacing:-0.24px;font-weight:400;line-height:1.35}
-/* Highlight the city / org tag in blue (like @handle in the screenshot) */
-.testimonial-role .at{color:var(--rs-blue);font-weight:500}
+/* Story lightbox */
+.story-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(18,20,28,0.80);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.story-modal.open{display:flex;animation:storyFade 0.2s ease}
+@keyframes storyFade{from{opacity:0}to{opacity:1}}
+.story-modal-inner{position:relative;width:100%;max-width:400px}
+.story-modal video{width:100%;max-height:84vh;border-radius:18px;display:block;background:#000;box-shadow:0 30px 80px rgba(0,0,0,0.55)}
+.story-close{position:absolute;top:-16px;right:-16px;width:38px;height:38px;border-radius:50%;border:none;background:var(--rs-white);color:var(--rs-text-primary);font-family:var(--rs-font);font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(0,0,0,0.3)}
+.story-close:hover{background:var(--rs-page-bg)}
+.review-media img{width:100%;height:100%;object-fit:cover;display:block}
+.review-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity 0.45s ease}
+.review-media.is-playing .review-vid{opacity:1}
+.review-media::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,20,26,0.62) 0%,rgba(18,20,26,0) 40%,rgba(18,20,26,0) 60%,rgba(18,20,26,0.55) 100%)}
+.review-headline{position:absolute;top:0;left:0;right:0;z-index:1;padding:18px 18px 0;color:#fff;font-family:var(--rs-font);font-weight:600;font-size:17px;line-height:1.22;letter-spacing:-0.34px}
+.review-pill{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:1;display:inline-flex;align-items:center;gap:7px;background:var(--rs-white);color:var(--rs-text-primary);font-family:var(--rs-font);font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:8px 16px;border-radius:var(--rs-r-pill);box-shadow:0 6px 16px rgba(0,0,0,0.22);white-space:nowrap}
+.review-pill svg{width:11px;height:11px;display:block;fill:var(--rs-blue)}
 
-/* Quote sits BELOW the author row */
-.testimonial-quote{order:2;font-family:var(--rs-font);font-style:normal;font-size:13px;line-height:1.6;letter-spacing:-0.26px;color:var(--rs-text-secondary);margin:0;font-weight:400}
-.testimonial-quote strong{font-weight:600;color:var(--rs-text-primary)}
+/* Body */
+.review-body{display:flex;flex-direction:column;gap:16px;padding:20px 20px 22px;flex:1}
+.review-quote{font-family:var(--rs-font);font-size:14px;line-height:1.55;letter-spacing:-0.28px;color:var(--rs-text-secondary);margin:0;font-weight:400}
+.review-quote strong{color:var(--rs-text-primary);font-weight:600}
+.review-attrib{margin-top:auto}
+.review-name{font-family:var(--rs-font);font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--rs-text-primary);line-height:1.2}
+.review-role{font-family:var(--rs-font);font-size:12px;color:var(--rs-text-muted);letter-spacing:-0.24px;margin-top:3px;line-height:1.35}
 
-@media(max-width:980px){.testimonials .section-inner{grid-template-columns:1fr;gap:36px}.testimonials-head{position:relative;top:0;padding-top:0}.testimonials-grid{height:560px}}
-@media(max-width:600px){.testimonials-grid{grid-template-columns:1fr;gap:0;height:520px;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 6%,#000 94%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 6%,#000 94%,transparent 100%)}.testimonials-col{animation:marquee-down 45s linear infinite !important}}
+@media(max-width:1000px){.reviews-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}}
+@media(max-width:560px){.reviews-grid{grid-template-columns:1fr;gap:18px}.testimonials-head{margin-bottom:40px}}
 
 /* PRESS */
 /* === PRESS / AS FEATURED IN — Respyr design system === */
@@ -1139,8 +1129,8 @@ body.menu-open .nav-menu-btn .ico-x{display:block}
 .orbit3d-ring{--orbit-r:clamp(118px,30vw,200px);position:absolute;top:50%;left:50%;width:0;height:0;transform-style:preserve-3d;transform:rotateX(15deg);animation:ringSpin 16s linear infinite}
 @keyframes ringSpin{from{transform:rotateX(15deg) rotateY(0deg)}to{transform:rotateX(15deg) rotateY(360deg)}}
 .o3d-c{position:absolute;font-family:var(--rs-font);font-size:clamp(13px,3.2vw,22px);font-weight:700;color:rgba(125,175,255,0.95);white-space:nowrap}
-@keyframes spotlightFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
-@media(max-width:600px){.device-spotlight{padding:64px 18px 0}@keyframes spotlightFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}}
+@keyframes spotlightFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-30px)}}
+@media(max-width:600px){.device-spotlight{padding:64px 18px 0}@keyframes spotlightFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}}
 </style>
 </head>
 <body>
@@ -1508,7 +1498,7 @@ body.menu-open .nav-menu-btn .ico-x{display:block}
       </ul>
     </div>
     <div class="product-vid-visual reveal">
-      <video autoplay loop muted playsinline preload="metadata">
+      <video autoplay loop muted playsinline preload="auto">
         <source src="images/blow-final.mp4" type="video/mp4" />
       </video>
     </div>
@@ -1767,80 +1757,79 @@ body.menu-open .nav-menu-btn .ico-x{display:block}
   <div class="section-inner">
     <div class="testimonials-head reveal">
       <div class="section-eyb">Real users · real results</div>
-      <h2 class="section-h2">Reviews from <span class="b"><em>our community.</em></span></h2>
+      <h2 class="section-h2">What change <em>looks like.</em></h2>
+      <p class="testimonials-sub">Real people who finally saw what their metabolism was doing — and did something about it.</p>
     </div>
-    <div class="testimonials-grid reveal-s" aria-label="Customer testimonials">
+    <div class="reviews-grid reveal-s" aria-label="Customer reviews">
 
-      <!-- COLUMN 1 — scrolls UP. Cards 1, 2, 3 duplicated for a seamless loop. -->
-      <div class="testimonials-col" data-dir="up" aria-hidden="false">
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★ <span class="testimonial-verified">✓ Verified</span></div>
-          <div class="testimonial-attrib"><div class="testimonial-avatar tav-1"><img src="images/avatar-1.jpg" alt="" loading="lazy" decoding="async"></div><div><div class="testimonial-name">Jordan M.</div><div class="testimonial-role">Wellness coach <span class="at">@LosAngeles</span></div></div></div>
-          <p class="testimonial-quote">"I've been chasing fat loss for two years. Respyr is the first thing that <strong>actually told me when my body was burning fat vs glucose</strong>. Down 12 pounds in 8 weeks."</p>
+      <article class="review-card">
+        <div class="review-media" role="button" tabindex="0" aria-label="Watch Jordan's story" onclick="openStory('images/review-jordan.mp4')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openStory('images/review-jordan.mp4')}">
+          <img class="review-poster" src="images/review-jordan-poster.jpg" alt="Jordan M., Respyr member" loading="lazy" decoding="async">
+          <video class="review-vid" src="images/review-jordan.mp4" loop muted autoplay playsinline preload="auto" aria-hidden="true"></video>
+          <span class="review-pill"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> Watch story</span>
         </div>
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★ <span class="testimonial-verified">✓ Verified</span></div>
-          <div class="testimonial-attrib"><div class="testimonial-avatar tav-2"><img src="images/avatar-2.jpg" alt="" loading="lazy" decoding="async"></div><div><div class="testimonial-name">Sara K.</div><div class="testimonial-role">NASM Trainer <span class="at">@Austin</span></div></div></div>
-          <p class="testimonial-quote">"I work with 15 clients a week. Respyr lets me see <strong>which clients are actually recovering and which are heading toward burnout</strong> — before they tell me."</p>
+        <div class="review-body">
+          <p class="review-quote">"Respyr is the first thing that <strong>actually told me when my body was burning fat vs glucose</strong>."</p>
+          <div class="review-attrib">
+            <div class="review-name">Jordan M.</div>
+            <div class="review-role">Wellness coach · Los Angeles</div>
+          </div>
         </div>
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★ <span class="testimonial-verified">✓ Verified</span></div>
-          <div class="testimonial-attrib"><div class="testimonial-avatar tav-3"><img src="images/avatar-3.jpg" alt="" loading="lazy" decoding="async"></div><div><div class="testimonial-name">Verified Respyr user</div><div class="testimonial-role">GLP-1 user <span class="at">@6mo</span></div></div></div>
-          <p class="testimonial-quote">"I'm on semaglutide and most apps just gave me generic disclaimers. <strong>Respyr is the first one that actually adapts my nutrition</strong>."</p>
+      </article>
+
+      <article class="review-card">
+        <div class="review-media" role="button" tabindex="0" aria-label="Watch Maya's story" onclick="openStory('images/review-maya.mp4')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openStory('images/review-maya.mp4')}">
+          <img class="review-poster" src="images/review-maya-poster.jpg" alt="Maya T., Respyr member" loading="lazy" decoding="async">
+          <video class="review-vid" src="images/review-maya.mp4" loop muted autoplay playsinline preload="auto" aria-hidden="true"></video>
+          <span class="review-pill"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> Watch story</span>
         </div>
-        <!-- duplicate the same 3 cards for seamless infinite loop -->
-        <div class="testimonial-card" aria-hidden="true">
-          <div class="testimonial-stars">★★★★★ <span class="testimonial-verified">✓ Verified</span></div>
-          <div class="testimonial-attrib"><div class="testimonial-avatar tav-1"><img src="images/avatar-1.jpg" alt="" loading="lazy" decoding="async"></div><div><div class="testimonial-name">Jordan M.</div><div class="testimonial-role">Wellness coach <span class="at">@LosAngeles</span></div></div></div>
-          <p class="testimonial-quote">"I've been chasing fat loss for two years. Respyr is the first thing that <strong>actually told me when my body was burning fat vs glucose</strong>. Down 12 pounds in 8 weeks."</p>
+        <div class="review-body">
+          <p class="review-quote">"On semaglutide, most apps gave me generic tips. <strong>Respyr actually adapts to what my body's doing that day</strong>."</p>
+          <div class="review-attrib">
+            <div class="review-name">Maya T.</div>
+            <div class="review-role">GLP-1 user · Miami</div>
+          </div>
         </div>
-        <div class="testimonial-card" aria-hidden="true">
-          <div class="testimonial-stars">★★★★★ <span class="testimonial-verified">✓ Verified</span></div>
-          <div class="testimonial-attrib"><div class="testimonial-avatar tav-2"><img src="images/avatar-2.jpg" alt="" loading="lazy" decoding="async"></div><div><div class="testimonial-name">Sara K.</div><div class="testimonial-role">NASM Trainer <span class="at">@Austin</span></div></div></div>
-          <p class="testimonial-quote">"I work with 15 clients a week. Respyr lets me see <strong>which clients are actually recovering and which are heading toward burnout</strong> — before they tell me."</p>
+      </article>
+
+      <article class="review-card">
+        <div class="review-media" role="button" tabindex="0" aria-label="Watch Marcus's story" onclick="openStory('images/review-marcus.mp4')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openStory('images/review-marcus.mp4')}">
+          <img class="review-poster" src="images/review-marcus-poster.jpg" alt="Marcus C., Respyr member" loading="lazy" decoding="async">
+          <video class="review-vid" src="images/review-marcus.mp4" loop muted autoplay playsinline preload="auto" aria-hidden="true"></video>
+          <span class="review-pill"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> Watch story</span>
         </div>
-        <div class="testimonial-card" aria-hidden="true">
-          <div class="testimonial-stars">★★★★★ <span class="testimonial-verified">✓ Verified</span></div>
-          <div class="testimonial-attrib"><div class="testimonial-avatar tav-3"><img src="images/avatar-3.jpg" alt="" loading="lazy" decoding="async"></div><div><div class="testimonial-name">Verified Respyr user</div><div class="testimonial-role">GLP-1 user <span class="at">@6mo</span></div></div></div>
-          <p class="testimonial-quote">"I'm on semaglutide and most apps just gave me generic disclaimers. <strong>Respyr is the first one that actually adapts my nutrition</strong>."</p>
+        <div class="review-body">
+          <p class="review-quote">"I travel three weeks a month — <strong>Respyr is the only tool that keeps up with my schedule</strong>. 60 seconds in the morning."</p>
+          <div class="review-attrib">
+            <div class="review-name">Marcus C.</div>
+            <div class="review-role">Founder · Seattle</div>
+          </div>
         </div>
+      </article>
+
+      <article class="review-card">
+        <div class="review-media" role="button" tabindex="0" aria-label="Watch Riley's story" onclick="openStory('images/review-riley.mp4')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openStory('images/review-riley.mp4')}">
+          <img class="review-poster" src="images/review-riley-poster.jpg" alt="Riley P., Respyr member" loading="lazy" decoding="async">
+          <video class="review-vid" src="images/review-riley.mp4" loop muted autoplay playsinline preload="auto" aria-hidden="true"></video>
+          <span class="review-pill"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> Watch story</span>
+        </div>
+        <div class="review-body">
+          <p class="review-quote">"I have Whoop, Oura, and a CGM. <strong>Respyr gives me the one signal none of them captured</strong> — fat vs carb burn, in real time."</p>
+          <div class="review-attrib">
+            <div class="review-name">Riley P.</div>
+            <div class="review-role">Biohacker · @HealthStack</div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Story lightbox -->
+    <div class="story-modal" id="storyModal" aria-hidden="true" onclick="closeStory()">
+      <div class="story-modal-inner" onclick="event.stopPropagation()">
+        <button class="story-close" type="button" aria-label="Close story" onclick="closeStory()">&times;</button>
+        <video id="storyVideo" controls playsinline></video>
       </div>
-
-      <!-- COLUMN 2 — scrolls DOWN. Cards 4, 5, 6 duplicated. -->
-      <div class="testimonials-col" data-dir="down" aria-hidden="false">
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★ <span class="testimonial-verified">✓ Verified</span></div>
-          <div class="testimonial-attrib"><div class="testimonial-avatar tav-4"><img src="images/avatar-4.jpg" alt="" loading="lazy" decoding="async"></div><div><div class="testimonial-name">Devin H.</div><div class="testimonial-role">Ultra-endurance athlete <span class="at">@Boulder</span></div></div></div>
-          <p class="testimonial-quote">"HRV told me I was recovered. Respyr told me my <strong>metabolic load was actually still elevated</strong>. I held back one extra day before a 100-miler. PR'd by 22 minutes."</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★ <span class="testimonial-verified">✓ Verified</span></div>
-          <div class="testimonial-attrib"><div class="testimonial-avatar tav-5"><img src="images/avatar-5.jpg" alt="" loading="lazy" decoding="async"></div><div><div class="testimonial-name">Marcus C.</div><div class="testimonial-role">Founder <span class="at">@Seattle</span></div></div></div>
-          <p class="testimonial-quote">"I run a tech company and travel three weeks a month. <strong>Respyr is the only tool that keeps up with how chaotic my schedule is</strong>. 60 seconds in the morning."</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★ <span class="testimonial-verified">✓ Verified</span></div>
-          <div class="testimonial-attrib"><div class="testimonial-avatar tav-6"><img src="images/avatar-6.jpg" alt="" loading="lazy" decoding="async"></div><div><div class="testimonial-name">Verified Respyr user</div><div class="testimonial-role">Biohacker <span class="at">@HealthStack</span></div></div></div>
-          <p class="testimonial-quote">"I have Whoop, Oura, and a CGM. Respyr gives me <strong>the one signal none of those captured</strong> — direct fat vs carb burn, in real time. Best $299 I've spent."</p>
-        </div>
-        <!-- duplicate set for seamless infinite loop -->
-        <div class="testimonial-card" aria-hidden="true">
-          <div class="testimonial-stars">★★★★★ <span class="testimonial-verified">✓ Verified</span></div>
-          <div class="testimonial-attrib"><div class="testimonial-avatar tav-4"><img src="images/avatar-4.jpg" alt="" loading="lazy" decoding="async"></div><div><div class="testimonial-name">Devin H.</div><div class="testimonial-role">Ultra-endurance athlete <span class="at">@Boulder</span></div></div></div>
-          <p class="testimonial-quote">"HRV told me I was recovered. Respyr told me my <strong>metabolic load was actually still elevated</strong>. I held back one extra day before a 100-miler. PR'd by 22 minutes."</p>
-        </div>
-        <div class="testimonial-card" aria-hidden="true">
-          <div class="testimonial-stars">★★★★★ <span class="testimonial-verified">✓ Verified</span></div>
-          <div class="testimonial-attrib"><div class="testimonial-avatar tav-5"><img src="images/avatar-5.jpg" alt="" loading="lazy" decoding="async"></div><div><div class="testimonial-name">Marcus C.</div><div class="testimonial-role">Founder <span class="at">@Seattle</span></div></div></div>
-          <p class="testimonial-quote">"I run a tech company and travel three weeks a month. <strong>Respyr is the only tool that keeps up with how chaotic my schedule is</strong>. 60 seconds in the morning."</p>
-        </div>
-        <div class="testimonial-card" aria-hidden="true">
-          <div class="testimonial-stars">★★★★★ <span class="testimonial-verified">✓ Verified</span></div>
-          <div class="testimonial-attrib"><div class="testimonial-avatar tav-6"><img src="images/avatar-6.jpg" alt="" loading="lazy" decoding="async"></div><div><div class="testimonial-name">Verified Respyr user</div><div class="testimonial-role">Biohacker <span class="at">@HealthStack</span></div></div></div>
-          <p class="testimonial-quote">"I have Whoop, Oura, and a CGM. Respyr gives me <strong>the one signal none of those captured</strong> — direct fat vs carb burn, in real time. Best $299 I've spent."</p>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -1936,6 +1925,49 @@ body.menu-open .nav-menu-btn .ico-x{display:block}
 </aside>
 
 <script>
+// ── Review story lightbox (AI testimonial videos) ──
+window.openStory = function(src){
+  var m = document.getElementById('storyModal'), v = document.getElementById('storyVideo');
+  if(!m || !v) return;
+  m.classList.add('open');
+  m.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+  function tryPlay(){ try{ v.currentTime = 0; }catch(e){} var p = v.play(); if(p && p.catch){ p.catch(function(){}); } }
+  if(v.getAttribute('src') !== src){
+    v.setAttribute('src', src);
+    v.preload = 'auto';
+    v.load();                       // force the browser to actually buffer the new source
+    v.addEventListener('canplay', tryPlay, { once: true });
+  } else {
+    tryPlay();
+  }
+};
+window.closeStory = function(){
+  var m = document.getElementById('storyModal'), v = document.getElementById('storyVideo');
+  if(!m) return;
+  m.classList.remove('open');
+  m.setAttribute('aria-hidden','true');
+  if(v){ v.pause(); }
+  document.body.style.overflow = '';
+};
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape') window.closeStory(); });
+
+// ── Review cards: auto-play the talking-head videos (muted) while the section is in view ──
+(function(){
+  var medias = document.querySelectorAll('.review-media');
+  if(!medias.length) return;
+  function play(m){ var v = m.querySelector('.review-vid'); if(!v) return; v.muted = true; m.classList.add('is-playing'); var p = v.play(); if(p && p.catch){ p.catch(function(){}); } }
+  function pause(m){ var v = m.querySelector('.review-vid'); if(v) v.pause(); }
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ play(en.target); } else { pause(en.target); } });
+    }, { threshold: 0.4 });
+    medias.forEach(function(m){ io.observe(m); });
+  } else {
+    medias.forEach(play);
+  }
+})();
+
 // ── Hero headline: rotate the first word through a list ──
 (function(){
   const el = document.getElementById('heroRotate');
