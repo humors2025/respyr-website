@@ -24,3 +24,6 @@ respyr-nextjs.zip
 
 # OS
 .DS_Store
+
+# Shareable build zip (too large for GitHub)
+respyr-website.zip

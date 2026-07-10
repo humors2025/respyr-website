@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Limited Warranty · Respyr</title>
+<meta name="description" content="The Respyr limited hardware warranty — coverage, claims, and terms.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rs-page-bg:#f5f7fa; --rs-white:#fff; --rs-dark:#252525;
+  --rs-blue:#308bf9; --rs-blue-light:#e9f3ff; --rs-blue-hover:#1f7ce8;
+  --rs-green:#3faf58; --rs-green-light:#eaffef;
+  --rs-text-primary:#252525; --rs-text-secondary:#535359; --rs-text-muted:#738298;
+  --rs-border:#e1e6ed;
+  --rs-red:#e74c3c;
+  --rs-font:'Poppins',system-ui,-apple-system,sans-serif;
+  --rs-r-card:15px; --rs-r-input:8px; --rs-r-pill:33px;
+}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important}}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--rs-font);background:var(--rs-page-bg);color:var(--rs-text-primary);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* ── Top bar ── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,255,255,0.82);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(225,230,237,0.6);height:64px;display:flex;align-items:center;padding:0 24px}
+.topbar-inner{max-width:1320px;width:100%;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.brand{display:inline-flex;align-items:center}
+.brand-logo{height:28px;width:auto}
+.back-link{font-size:13px;font-weight:500;letter-spacing:-0.26px;color:var(--rs-text-secondary);display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--rs-r-pill);border:1px solid var(--rs-border);background:var(--rs-white);transition:background 0.18s ease,color 0.18s ease}
+.back-link:hover{background:var(--rs-blue-light);color:var(--rs-blue);border-color:var(--rs-blue-light)}
+.back-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Eyebrow ── */
+.eyb{display:inline-flex;align-items:center;gap:8px;background:var(--rs-white);color:var(--rs-text-primary);font-size:12px;font-weight:500;letter-spacing:-0.24px;padding:8px 16px;border-radius:var(--rs-r-pill);border:1px solid var(--rs-border);box-shadow:0 1px 2px rgba(37,37,37,0.04)}
+.eyb::before{content:'';width:7px;height:7px;background:var(--rs-blue);border-radius:50%;animation:pulse-dot 2.4s ease-in-out infinite;box-shadow:0 0 10px var(--rs-blue)}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:0.5}}
+
+.page{flex:1;padding:120px 24px 96px}
+.wrap{max-width:860px;margin:0 auto}
+
+/* ── Legal document ── */
+.legal-head{margin-bottom:28px}
+.legal-head .eyb{margin-bottom:20px}
+.legal-head h1{font-weight:600;font-size:clamp(30px,4vw,46px);line-height:1.08;letter-spacing:-1.6px;color:var(--rs-text-primary);margin:0 0 10px}
+.legal-updated{font-size:13px;letter-spacing:-0.26px;color:var(--rs-text-muted);font-weight:400}
+
+.legal-card{background:var(--rs-white);border:1px solid var(--rs-border);border-radius:var(--rs-r-card);padding:44px 52px;box-shadow:0 1px 2px rgba(37,37,37,0.04)}
+.legal-card > p{font-size:15px;line-height:1.75;letter-spacing:-0.3px;color:var(--rs-text-secondary);font-weight:400;margin:0 0 18px}
+.legal-card h2{font-weight:600;font-size:22px;letter-spacing:-0.5px;color:var(--rs-text-primary);margin:38px 0 12px}
+.legal-card h3{font-weight:600;font-size:17px;letter-spacing:-0.34px;color:var(--rs-text-primary);margin:24px 0 10px}
+.legal-card ul{list-style:none;margin:0 0 18px;padding:0}
+.legal-card ul li{position:relative;padding-left:22px;font-size:15px;line-height:1.7;letter-spacing:-0.3px;color:var(--rs-text-secondary);margin-bottom:12px}
+.legal-card ul li::before{content:'';position:absolute;left:4px;top:11px;width:6px;height:6px;border-radius:50%;background:var(--rs-blue)}
+.legal-card strong{color:var(--rs-text-primary);font-weight:600}
+.legal-card a{color:var(--rs-blue);font-weight:500}
+.legal-card a:hover{text-decoration:underline}
+
+/* ── Footer ── */
+.foot{padding:24px;border-top:1px solid var(--rs-border);background:var(--rs-white)}
+.foot-inner{max-width:860px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--rs-text-muted);letter-spacing:-0.24px}
+.foot a{color:var(--rs-text-secondary)}
+.foot a:hover{color:var(--rs-blue)}
+
+@media(max-width:780px){
+  .page{padding:96px 16px 64px}
+  .legal-card{padding:30px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="respyr-final.html">
+      <img src="images/respyr logo.png" alt="Respyr" class="brand-logo" decoding="async">
+    </a>
+    <a class="back-link" href="respyr-final.html">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </a>
+  </div>
+</header>
+
+<main class="page">
+  <div class="wrap">
+
+    <div class="legal-head">
+      <div class="eyb">Legal</div>
+      <h1>Limited Warranty</h1>
+      <div class="legal-updated">Last updated: February 22, 2024</div>
+    </div>
+
+    <div class="legal-card">
+      <p>Every Respyr device is covered by a Limited Warranty. This warranty gives You specific legal rights, and You may also have other rights which vary depending on Your Country or region.</p>
+      <p>The Company warrants the Respyr device against defects in materials and workmanship under normal use for a period of <strong>two (2) years</strong> from the date of original retail purchase.</p>
+
+      <h2>What Is Covered</h2>
+      <p>During the warranty period, the Company will, at its option and free of charge, repair or replace a device or part that proves to be defective, provided that the device is used and maintained in accordance with the Company's instructions. Coverage includes:</p>
+      <ul>
+        <li><strong>Manufacturing defects</strong> in the device's sensors, electronics, and housing.</li>
+        <li><strong>Hardware faults</strong> that occur under normal, intended use of the Service.</li>
+        <li><strong>Charging and connectivity components</strong> that fail due to a defect and not misuse.</li>
+      </ul>
+
+      <h2>What Is Not Covered</h2>
+      <p>This Limited Warranty does not apply to:</p>
+      <ul>
+        <li><strong>Normal wear and tear</strong>, including cosmetic damage such as scratches and dents.</li>
+        <li><strong>Accidental damage</strong>, misuse, liquid exposure beyond stated ratings, fire, or unauthorized modification.</li>
+        <li><strong>Damage caused</strong> by using the device with a non-Respyr accessory or by repairs performed by anyone other than an authorized service provider.</li>
+        <li><strong>Consumable parts</strong>, unless the failure has occurred due to a defect in materials or workmanship.</li>
+      </ul>
+
+      <h2>How to Make a Warranty Claim</h2>
+      <p>To obtain warranty service, please contact us at <a href="mailto:support@respyr.com">support@respyr.com</a> with Your order number and a description of the issue. Our team may ask You to complete a few troubleshooting steps. If a hardware issue is confirmed, We will arrange repair or replacement at no cost to You.</p>
+
+      <h2>Repair or Replacement</h2>
+      <p>If We choose to replace Your device, the replacement may be a new or refurbished unit that is functionally equivalent to the original. Any replacement device is warranted for the remainder of the original warranty period.</p>
+
+      <h2>Limitation of Liability</h2>
+      <p>To the maximum extent permitted by applicable law, the Company's liability is limited to the repair or replacement of the device. The Company is not liable for any indirect or consequential damages. Respyr is a lifestyle and wellness tool and is not a medical or diagnostic device.</p>
+
+      <h2>Contact Us</h2>
+      <p>If you have any questions about this Limited Warranty, You can contact us by email at <a href="mailto:support@respyr.com">support@respyr.com</a> or through our <a href="respyr-contact.html">contact page</a>.</p>
+    </div>
+
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <div>© Respyr 2026 · Made for the curious.</div>
+    <div>
+      <a href="#">Privacy</a> · <a href="respyr-terms.html">Terms</a> · <a href="mailto:support@respyr.com">support@respyr.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -112,7 +112,8 @@ img{max-width:100%;display:block}
 .founders-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1180px;margin:0 auto}
 .founder{background:var(--rs-white);border:1px solid var(--rs-border);border-radius:var(--rs-r-card);padding:32px 28px;display:flex;flex-direction:column;gap:16px;transition:transform 0.25s ease,box-shadow 0.25s ease,border-color 0.25s ease}
 .founder:hover{transform:translateY(-4px);box-shadow:0 24px 56px rgba(37,37,37,0.10);border-color:rgba(48,139,249,0.4)}
-.founder-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--rs-blue),var(--rs-blue-light));display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:22px;letter-spacing:-0.44px;line-height:1;margin-bottom:8px}
+.founder-avatar{width:64px;height:64px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,var(--rs-blue),var(--rs-blue-light));display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:22px;letter-spacing:-0.44px;line-height:1;margin-bottom:8px}
+.founder-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
 .founder-name{font-weight:600;font-size:20px;letter-spacing:-0.5px;color:var(--rs-text-primary);margin:0;line-height:1.2}
 .founder-role{font-size:13px;font-weight:500;letter-spacing:-0.26px;color:var(--rs-blue);margin:0}
 .founder-bio{font-size:14px;line-height:1.6;letter-spacing:-0.28px;color:var(--rs-text-secondary);font-weight:400;margin:8px 0 0}
@@ -279,7 +280,7 @@ img{max-width:100%;display:block}
 
     <div class="origin-image reveal" aria-hidden="true">
       <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=900&q=85" alt="Respyr team at work" decoding="async">
-      <span class="origin-image-tag">San Francisco · est. 2022</span>
+      <span class="origin-image-tag">Bangalore, India · est. 2022</span>
     </div>
   </div>
 </section>
@@ -339,12 +340,12 @@ img{max-width:100%;display:block}
   <div class="founders-head">
     <div class="eyb reveal">The team</div>
     <h2 class="reveal">Built by <em>three people</em> who got tired of guessing.</h2>
-    <p class="sub reveal">The full team is 47 now, across San Francisco, Cambridge, and Lagos. These are the three who started it.</p>
+    <p class="sub reveal">The full team is 20 now, based in Bangalore, India. These are the three who started it.</p>
   </div>
 
   <div class="founders-grid">
     <article class="founder reveal">
-      <div class="founder-avatar" aria-hidden="true">AJ</div>
+      <div class="founder-avatar"><img src="images/avatar-ankur.jpg" alt="Ankur Jaiswal" decoding="async"></div>
       <h3 class="founder-name">Ankur Jaiswal</h3>
       <p class="founder-role">Founder · CEO</p>
       <p class="founder-bio">Spent eight years at Verily building consumer health hardware. PhD in Biomedical Engineering from MIT. Her own GLP-1 experience was the catalyst.</p>
@@ -356,9 +357,9 @@ img{max-width:100%;display:block}
     </article>
 
     <article class="founder reveal">
-      <div class="founder-avatar" aria-hidden="true">KV</div>
+      <div class="founder-avatar"><img src="images/avatar-kushal.jpg" alt="Kushal Vyas" decoding="async"></div>
       <h3 class="founder-name">Kushal Vyas</h3>
-      <p class="founder-role">Co-founder · CTO</p>
+      <p class="founder-role">CTO</p>
       <p class="founder-bio">Designed three generations of biosensors on the Apple Watch hardware team. Believes a device should disappear after the first reading.</p>
       <div class="founder-meta">
         <span class="founder-chip">ex-Apple</span>
@@ -368,9 +369,9 @@ img{max-width:100%;display:block}
     </article>
 
     <article class="founder reveal">
-      <div class="founder-avatar" aria-hidden="true">CK</div>
+      <div class="founder-avatar"><img src="images/avatar-chandan.jpg" alt="Chandan Kumar" decoding="async"></div>
       <h3 class="founder-name">Chandan Kumar</h3>
-      <p class="founder-role">Co-founder · CTO</p>
+      <p class="founder-role">CIO</p>
       <p class="founder-bio">Published 30+ papers on volatile breath compounds at Oxford. Joined Respyr the week he realized lab science was sitting unused.</p>
       <div class="founder-meta">
         <span class="founder-chip">Oxford</span>

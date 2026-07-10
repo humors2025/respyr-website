@@ -78,7 +78,16 @@ function externalizeAndFixPaths(chunk) {
     .replace(/href="respyr-final\.html"/g, 'href="/"')
     .replace(/href="respyr-about\.html"/g, 'href="/about"')
     .replace(/href="respyr-contact\.html"/g, 'href="/contact"')
-    .replace(/href="respyr-read-more\.html"/g, 'href="/read-more"');
+    .replace(/href="respyr-read-more\.html"/g, 'href="/read-more"')
+    .replace(/href="respyr-terms\.html"/g, 'href="/terms"')
+    .replace(/href="respyr-privacy\.html"/g, 'href="/privacy"')
+    .replace(/href="respyr-refund\.html"/g, 'href="/refund"')
+    .replace(/href="respyr-warranty\.html"/g, 'href="/warranty"');
+  // Shop moved to its own /shop page: retarget the homepage anchors/handlers.
+  chunk = chunk
+    .replace(/href="#shop"/g, 'href="/shop"')
+    .replace(/document\.getElementById\('shop'\)\.scrollIntoView\(\{behavior:'smooth'\}\)/g, "location.href='/shop'")
+    .replace(/onclick="openCart\(\)"/g, 'onclick="location.href=\'/shop\'"');
   return chunk;
 }
 

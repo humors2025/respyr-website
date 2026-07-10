@@ -18,11 +18,9 @@ import { html as steps } from '../components/Steps';
 import { html as testimonials } from '../components/Testimonials';
 import { html as showcase } from '../components/Showcase';
 import { html as deviceSpotlight } from '../components/DeviceSpotlight';
-import { html as shop } from '../components/Shop';
 import { html as faq } from '../components/Faq';
 import { html as finalCta } from '../components/FinalCta';
 import { html as footer } from '../components/Footer';
-import { html as cartDrawer } from '../components/CartDrawer';
 import ScriptLoader from '../components/ScriptLoader';
 
 const PAGE_HTML = [
@@ -40,12 +38,10 @@ const PAGE_HTML = [
   deviceSpotlight,
   steps,
   showcase,
-  shop,
   testimonials,
   faq,
   finalCta,
   footer,
-  cartDrawer,
 ].join('\n');
 
 export default function Home() {
