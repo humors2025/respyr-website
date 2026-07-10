@@ -1,3 +1,55 @@
+/* ── Mobile: tap card to pause testimonials, scroll to resume ── */
+(function(){
+  const grid = document.querySelector('.testimonials-grid');
+  if(!grid) return;
+  const cols = grid.querySelectorAll('.testimonials-col');
+  let paused = false;
+  grid.addEventListener('touchstart', function(){
+    if(!paused){
+      cols.forEach(c => c.style.animationPlayState = 'paused');
+      paused = true;
+    }
+  });
+  window.addEventListener('scroll', function(){
+    if(paused){
+      cols.forEach(c => c.style.animationPlayState = '');
+      paused = false;
+    }
+  }, {passive:true});
+})();
+
+// ── 360 device spinner (shop page): auto ping-pong cross-fade + drag to rotate ──
+(function(){
+  var el = document.getElementById('deviceSpin');
+  if(!el) return;
+  var frames = [].slice.call(el.querySelectorAll('.ds-frame'));
+  var n = frames.length;
+  if(n < 2) return;
+  var pos = 0, dir = 1, dragging = false, autoPaused = false, lastX = 0, resumeTimer = null, last = 0;
+  var speed = 0.02; // frames per ~16ms
+  function render(){
+    for(var i=0;i<n;i++){ var o = 1 - Math.abs(pos - i); frames[i].style.opacity = o > 0 ? o : 0; }
+  }
+  function tick(t){
+    if(!last) last = t;
+    var dt = t - last; last = t;
+    if(!dragging && !autoPaused){
+      pos += dir * speed * (dt/16);
+      if(pos >= n-1){ pos = n-1; dir = -1; } else if(pos <= 0){ pos = 0; dir = 1; }
+      render();
+    }
+    requestAnimationFrame(tick);
+  }
+  function px(e){ return e.touches ? e.touches[0].clientX : e.clientX; }
+  function down(e){ dragging = true; autoPaused = true; lastX = px(e); if(resumeTimer){ clearTimeout(resumeTimer); resumeTimer = null; } }
+  function move(e){ if(!dragging) return; var x = px(e), dx = x - lastX; lastX = x; pos += dx / (el.clientWidth / (n-1)); if(pos < 0) pos = 0; if(pos > n-1) pos = n-1; render(); }
+  function up(){ if(!dragging) return; dragging = false; resumeTimer = setTimeout(function(){ autoPaused = false; last = 0; }, 2500); }
+  el.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  el.addEventListener('touchstart', down, {passive:true}); el.addEventListener('touchmove', move, {passive:true}); el.addEventListener('touchend', up);
+  render();
+  requestAnimationFrame(tick);
+})();
+
 // ── Hero headline: rotate the first word through a list ──
 (function(){
   const el = document.getElementById('heroRotate');
@@ -106,6 +158,16 @@ function selectImage(idx){
   document.querySelectorAll('.shop-gallery-main img').forEach((img, i) => {
     if(i === idx) img.classList.add('active'); else img.classList.remove('active');
   });
+  const d3 = document.querySelector('.shop-3d-slide');
+  if(d3){
+    if(idx === 3){
+      d3.classList.add('active');
+      const f = d3.querySelector('iframe');
+      if(f && !f.src) f.src = f.dataset.src; // load the 3D device on first open
+    } else {
+      d3.classList.remove('active');
+    }
+  }
   document.querySelectorAll('.shop-thumb').forEach((thumb, i) => {
     if(i === idx) thumb.classList.add('active'); else thumb.classList.remove('active');
   });
@@ -130,6 +192,19 @@ function updateAddBtnPrice(){
   const total = products[currentVariant].price * currentQty;
   document.getElementById('add-btn-price').textContent = '$' + total;
 }
+// Shop accordion — opening one panel closes the others
+(function(){
+  function initShopAccordion(){
+    const accs = document.querySelectorAll('.shop-accordion .shop-acc');
+    accs.forEach(function(acc){
+      acc.addEventListener('toggle', function(){
+        if(acc.open){ accs.forEach(function(o){ if(o !== acc) o.open = false; }); }
+      });
+    });
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initShopAccordion);
+  else initShopAccordion();
+})();
 function addCurrentToCart(){
   if(!cart[currentVariant]) cart[currentVariant] = { ...products[currentVariant], qty: 0 };
   cart[currentVariant].qty += currentQty;
@@ -155,7 +230,8 @@ function changeQty(key, delta){
 function renderCart(){
   const items = Object.entries(cart);
   const totalQty = items.reduce((s, [, item]) => s + item.qty, 0);
-  document.getElementById('cart-count').textContent = totalQty;
+  const cartCountEl = document.getElementById('cart-count');
+  if(cartCountEl) cartCountEl.textContent = totalQty;
   const empty = document.getElementById('drawer-empty');
   const itemsContainer = document.getElementById('drawer-items');
   const footer = document.getElementById('drawer-footer');

@@ -1,0 +1,126 @@
+﻿<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(30% 40% at 50% -6%,rgba(206,226,255,0.90) 0%,rgba(140,175,230,0.24) 40%,rgba(120,150,210,0) 66%),radial-gradient(135% 120% at 50% 34%,rgba(8,16,32,0) 46%,rgba(6,12,26,0.55) 100%),linear-gradient(#2b4770 0%,#223a60 48%,#1a2f50 100%);cursor:grab}body:active{cursor:grabbing}#c{display:block;width:100vw;height:100vh;position:relative;z-index:1}#sh{position:fixed;left:50%;top:84%;width:23%;height:5.5%;transform:translate(-50%,-50%);background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.28) 46%,rgba(0,0,0,0) 76%);filter:blur(7px);z-index:0;pointer-events:none}</style>
+</head><body><div id="sh"></div><canvas id="c"></canvas>
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.164.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.164.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { toCreasedNormals, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { FullScreenQuad } from 'three/addons/postprocessing/Pass.js';
+const D=THREE.MathUtils.degToRad, canvas=document.getElementById('c');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);renderer.setClearColor(0x000000,0);
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.42;
+const scene=new THREE.Scene();
+const pmrem=new THREE.PMREMGenerator(renderer);scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+const camera=new THREE.PerspectiveCamera(30,innerWidth/innerHeight,0.1,8000);
+const _q=location.hash+location.search;const VSHIFT=_q.indexOf('align=right')>=0?0.17:0;const NOROTATE=_q.indexOf('static')>=0;
+if(NOROTATE){document.documentElement.style.cursor='default';document.body.style.cursor='default';}
+function applyView(){camera.aspect=innerWidth/innerHeight;if(VSHIFT)camera.setViewOffset(innerWidth,innerHeight,-innerWidth*VSHIFT,0,innerWidth,innerHeight);else camera.clearViewOffset();camera.updateProjectionMatrix();}
+const shEl=document.getElementById('sh');if(shEl){shEl.style.opacity='0';if(VSHIFT)shEl.style.left=((0.5+VSHIFT)*100+1).toFixed(1)+'%';}
+const key=new THREE.SpotLight(0xffffff,1500,0,Math.PI/3.0,1.0,1.1);key.position.set(0,560,120);key.castShadow=true;key.shadow.mapSize.set(2048,2048);key.shadow.bias=-0.0004;scene.add(key,key.target);
+const top=new THREE.DirectionalLight(0xffffff,2.4);top.position.set(10,460,70);scene.add(top);
+const front=new THREE.DirectionalLight(0xeaf1ff,2.7);front.position.set(-60,180,320);scene.add(front);
+const rake=new THREE.DirectionalLight(0xffffff,9.5);rake.position.set(-200,5,30);rake.target.position.set(0,-10,0);scene.add(rake,rake.target); // side-rake to reveal the embossed R
+const fillR=new THREE.DirectionalLight(0xdfe9ff,1.1);fillR.position.set(180,120,220);scene.add(fillR);
+scene.add(new THREE.AmbientLight(0xaec2e6,0.32));
+const rim=new THREE.DirectionalLight(0x9ec2ff,1.5);rim.position.set(240,90,-220);scene.add(rim);
+const rim2=new THREE.DirectionalLight(0x7fa8ff,1.1);rim2.position.set(-240,50,-160);scene.add(rim2);
+scene.add(new THREE.HemisphereLight(0x5877a8,0x0e1626,1.0));
+const pivot=new THREE.Group();scene.add(pivot);
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enablePan=false;controls.enableZoom=false;controls.autoRotate=false;controls.autoRotateSpeed=1.6;controls.enableRotate=!NOROTATE;
+controls.minPolarAngle=Math.PI*0.42;controls.maxPolarAngle=Math.PI*0.50;controls.enableDamping=true;controls.dampingFactor=0.08;
+window.__dev={camera,controls,pivot,scene};
+function makeGlowTex(){const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');const gr=g.createRadialGradient(64,64,0,64,64,64);gr.addColorStop(0,'rgba(214,234,255,1)');gr.addColorStop(0.3,'rgba(120,180,255,0.68)');gr.addColorStop(0.62,'rgba(70,130,240,0.2)');gr.addColorStop(1,'rgba(70,130,240,0)');g.fillStyle=gr;g.fillRect(0,0,128,128);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;}
+(()=>{const dl=new DRACOLoader();dl.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');const gl=new GLTFLoader();gl.setDRACOLoader(dl);return gl;})().load('/images/device_hd.glb',(gltf)=>{
+  const model=gltf.scene;
+  let box=new THREE.Box3().setFromObject(model);const ctr=box.getCenter(new THREE.Vector3());model.position.sub(ctr);
+  const holder=new THREE.Group();holder.add(model);
+  box=new THREE.Box3().setFromObject(holder);const sz=box.getSize(new THREE.Vector3());
+  if(sz.x>=sz.y&&sz.x>=sz.z)holder.rotation.z=Math.PI/2; else if(sz.z>=sz.y&&sz.z>=sz.x)holder.rotation.x=-Math.PI/2;
+  const _m=Math.max(sz.x,sz.y,sz.z);holder.scale.setScalar(110/_m);
+  pivot.add(holder);
+  model.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;
+    if(o.name==='LED'){o.material=new THREE.MeshBasicMaterial({color:0x6ea8f5,toneMapped:false});o.castShadow=false;o.layers.enable(1);ledMesh=o;}
+    else if(o.name==='Button'){o.material=new THREE.MeshStandardMaterial({color:0x0a0a0c,metalness:0.0,roughness:0.62,envMapIntensity:0.3});}else if(o.name==='Cap'){o.material=new THREE.MeshStandardMaterial({color:0x0d0d10,metalness:0.1,roughness:0.44,envMapIntensity:0.95,side:THREE.DoubleSide});}else{o.material=new THREE.MeshStandardMaterial({color:0x0d0d10,metalness:0.1,roughness:0.44,envMapIntensity:0.95,side:THREE.DoubleSide});}
+  }});
+  box=new THREE.Box3().setFromObject(holder);const s2=box.getSize(new THREE.Vector3());
+  const h=s2.y;const dist=(h*0.95)/Math.tan(D(camera.fov/2));
+  camera.position.set(0,h*0.03,dist);controls.target.set(0,0,0);controls.update();applyView();
+  const ground=new THREE.Mesh(new THREE.PlaneGeometry(3000,3000),new THREE.ShadowMaterial({opacity:0.5}));
+  ground.rotation.x=-Math.PI/2;ground.position.y=box.min.y-1;ground.receiveShadow=true;scene.add(ground);
+  window.__dev.ready=true;introActive=true;introT0=null;pivot.rotation.y=END_Y+SPIN_Y;pivot.rotation.x=TILT_X;pivot.scale.setScalar(START_SCALE);canvas.style.opacity='0';
+},undefined,()=>{document.title='ERR';});
+let introActive=false,introT0=null,ledMesh=null,glowAmt=0;
+const INTRO_MS=2600,SPIN_Y=Math.PI*1.1,END_Y=0,TILT_X=-0.28,START_SCALE=2.4;
+const clamp01=x=>x<0?0:x>1?1:x;
+const _ledWhite=new THREE.Color(0xffffff),_ledBlue=new THREE.Color(0x6ea8f5);
+// ease-in-out: slow start -> fast middle -> ease to a pause
+const eInOut=t=>t<0.5?8*t*t*t*t:1-Math.pow(-2*t+2,4)/2;
+// --- realistic LED bloom: blur the emitter, composite additively, keep canvas transparent ---
+const BLOOM_LAYER=1;
+let _rtA=new THREE.WebGLRenderTarget(Math.max(4,innerWidth>>1),Math.max(4,innerHeight>>1),{type:THREE.HalfFloatType,depthBuffer:false});
+let _rtB=new THREE.WebGLRenderTarget(Math.max(4,innerWidth>>1),Math.max(4,innerHeight>>1),{type:THREE.HalfFloatType,depthBuffer:false});
+const _vs='varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}';
+const _blurMat=new THREE.ShaderMaterial({uniforms:{tDiffuse:{value:null},dir:{value:new THREE.Vector2()}},vertexShader:_vs,fragmentShader:'uniform sampler2D tDiffuse;uniform vec2 dir;varying vec2 vUv;void main(){float w0=0.227027,w1=0.194595,w2=0.121622,w3=0.054054,w4=0.016216;vec4 c=texture2D(tDiffuse,vUv)*w0;c+=texture2D(tDiffuse,vUv+dir)*w1;c+=texture2D(tDiffuse,vUv-dir)*w1;c+=texture2D(tDiffuse,vUv+dir*2.0)*w2;c+=texture2D(tDiffuse,vUv-dir*2.0)*w2;c+=texture2D(tDiffuse,vUv+dir*3.0)*w3;c+=texture2D(tDiffuse,vUv-dir*3.0)*w3;c+=texture2D(tDiffuse,vUv+dir*4.0)*w4;c+=texture2D(tDiffuse,vUv-dir*4.0)*w4;gl_FragColor=c;}',depthTest:false,depthWrite:false});
+const _compMat=new THREE.ShaderMaterial({uniforms:{tGlow:{value:null},uStrength:{value:0.0},uTint:{value:new THREE.Color(0x8ec2ff)}},vertexShader:_vs,fragmentShader:'uniform sampler2D tGlow;uniform float uStrength;uniform vec3 uTint;varying vec2 vUv;void main(){vec3 g=texture2D(tGlow,vUv).rgb;float l=max(g.r,max(g.g,g.b));gl_FragColor=vec4(uTint*l*uStrength,1.0);}',depthTest:false,depthWrite:false,transparent:true});
+_compMat.blending=THREE.CustomBlending;_compMat.blendEquation=THREE.AddEquation;_compMat.blendSrc=THREE.OneFactor;_compMat.blendDst=THREE.OneFactor;_compMat.blendSrcAlpha=THREE.ZeroFactor;_compMat.blendDstAlpha=THREE.OneFactor;
+const _fsq=new FullScreenQuad(_blurMat);const _fsqC=new FullScreenQuad(_compMat);
+function render3d(){
+  if(ledMesh&&glowAmt>0.002){
+    renderer.setClearColor(0x000000,1);camera.layers.set(BLOOM_LAYER);
+    renderer.setRenderTarget(_rtA);renderer.render(scene,camera);
+    const px=1/_rtA.width,py=1/_rtA.height;
+    _blurMat.uniforms.tDiffuse.value=_rtA.texture;_blurMat.uniforms.dir.value.set(px*1.5,0);renderer.setRenderTarget(_rtB);_fsq.render(renderer);
+    _blurMat.uniforms.tDiffuse.value=_rtB.texture;_blurMat.uniforms.dir.value.set(0,py*1.5);renderer.setRenderTarget(_rtA);_fsq.render(renderer);
+    _blurMat.uniforms.tDiffuse.value=_rtA.texture;_blurMat.uniforms.dir.value.set(px*3.2,0);renderer.setRenderTarget(_rtB);_fsq.render(renderer);
+    _blurMat.uniforms.tDiffuse.value=_rtB.texture;_blurMat.uniforms.dir.value.set(0,py*3.2);renderer.setRenderTarget(_rtA);_fsq.render(renderer);
+    camera.layers.set(0);renderer.setClearColor(0x000000,0);
+  }
+  renderer.setRenderTarget(null);renderer.render(scene,camera);
+  if(ledMesh&&glowAmt>0.002){_compMat.uniforms.tGlow.value=_rtA.texture;_compMat.uniforms.uStrength.value=glowAmt*1.1;renderer.autoClear=false;_fsqC.render(renderer);renderer.autoClear=true;}
+}
+function loop(ts){requestAnimationFrame(loop);ts=ts||performance.now();
+  if(introActive){
+    if(introT0===null)introT0=ts;
+    const t=clamp01((ts-introT0)/INTRO_MS);
+    const e=eInOut(t);
+    pivot.scale.setScalar(1+(START_SCALE-1)*(1-e));  // comes in large, recedes to rest
+    pivot.rotation.x=TILT_X*(1-e);                   // settle upright
+    pivot.rotation.y=END_Y+SPIN_Y*(1-e);             // rotate to front — slow, fast, pause
+    canvas.style.opacity=String(clamp01(t/0.18));    // quick fade in
+    if(shEl)shEl.style.opacity=String(clamp01((t-0.72)/0.26));  // shadow appears as device settles
+    glowAmt=clamp01((t-0.78)/0.2);  // LED glow blooms in as device stops
+    if(ledMesh)ledMesh.material.color.copy(_ledWhite).lerp(_ledBlue,glowAmt);  // arch: white while rotating -> blue as it settles
+    if(t>=1){introActive=false;pivot.scale.setScalar(1);pivot.rotation.x=0;pivot.rotation.y=END_Y;canvas.style.opacity='1';if(shEl)shEl.style.opacity='1';glowAmt=1;if(ledMesh)ledMesh.material.color.copy(_ledBlue);}
+  }
+  controls.update();render3d();}
+requestAnimationFrame(loop);
+addEventListener('resize',()=>{renderer.setSize(innerWidth,innerHeight);applyView();_rtA.setSize(Math.max(4,innerWidth>>1),Math.max(4,innerHeight>>1));_rtB.setSize(Math.max(4,innerWidth>>1),Math.max(4,innerHeight>>1));});
+</script></body></html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

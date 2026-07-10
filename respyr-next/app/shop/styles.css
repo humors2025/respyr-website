@@ -1,0 +1,17 @@
+/* Secondary-page shell (topbar + simple footer) for the standalone Shop page.
+   Shop/cart styling itself comes from globals.css. */
+
+/* ── Top bar ── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,255,255,0.82);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(225,230,237,0.6);height:64px;display:flex;align-items:center;padding:0 24px}
+.topbar-inner{max-width:1320px;width:100%;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.topbar .brand{display:inline-flex;align-items:center}
+.topbar .brand-logo{height:28px;width:auto}
+.back-link{font-size:13px;font-weight:500;letter-spacing:-0.26px;color:var(--rs-text-secondary);display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--rs-r-pill);border:1px solid var(--rs-border);background:var(--rs-white);transition:background 0.18s ease,color 0.18s ease}
+.back-link:hover{background:var(--rs-blue-light);color:var(--rs-blue);border-color:var(--rs-blue-light)}
+.back-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Simple footer ── */
+.foot{padding:24px;border-top:1px solid var(--rs-border);background:var(--rs-white)}
+.foot-inner{max-width:1320px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--rs-text-muted);letter-spacing:-0.24px}
+.foot a{color:var(--rs-text-secondary)}
+.foot a:hover{color:var(--rs-blue)}
